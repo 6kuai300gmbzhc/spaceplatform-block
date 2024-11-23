@@ -1,0 +1,11 @@
+{
+  "name": "spaceship-beginning",
+  "version": "0.0.1",
+  "title": "spaceship-beginning（飞船开局）",
+  "author": "dazhaxie",
+  "contact": "486656944@qq.com",
+  "homepage": "https://www.NULL.com",
+  "factorio_version": "2.0",
+  "dependencies": ["space-age"],
+  "description": "从飞船上开始游戏！星岩可以产出所有类型的矿物，所有配方都可以在飞船上生产，并且可以在飞船上种树。Begin your game on spaceship."
+}

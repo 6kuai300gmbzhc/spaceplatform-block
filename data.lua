@@ -1,0 +1,7 @@
+require("prototypes/item")
+require("prototypes/recipe")
+require("prototypes/technology")
+require("prototypes/plant")
+require("prototypes/asteroid")
+require("prototypes/mother_ship")
+-- require("asteroids")
