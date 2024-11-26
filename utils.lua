@@ -200,4 +200,45 @@ function utils.add_asteroid_to_connection(connection,asteroid_name,asteroid_type
     end
 end
 
+
+function utils.contains(element, array)
+    for _, value in pairs(array) do
+        if value == element then
+            return true
+        end
+    end
+    return false
+end
+
+--@param name string
+--@param spcae_location string
+function utils.add_space_location_to_technology(name,space_location)
+    local effects = technologies[name].effects
+    local has_effect=false
+    for _,effect in pairs(effects) do
+        if effect.type=="unlock-space-location" and effect.space_location==space_location then
+            has_effect=true
+            break
+        end
+    end
+    if not has_effect then
+        local effect={
+            space_location = space_location,
+            type = "unlock-space-location",
+            use_icon_overlay_constant = true
+        }
+        table.insert(effects,effect)
+    end
+end
+--@param name string
+--@param spcae_location string
+function utils.remove_space_location_to_technology(name,space_location)
+    local effects = technologies[name].effects
+    local i =1
+    for i = #effects, 1, -1 do
+        if effects[i].type=="unlock-space-location" and effects[i].space_location== space_location then
+            table.remove(effects,i)
+        end
+    end 
+end
 return utils

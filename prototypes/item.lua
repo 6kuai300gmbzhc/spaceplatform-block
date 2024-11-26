@@ -193,16 +193,45 @@ data:extend({
     
 })
 data.raw.item["iron-bacteria"].spoil_result="oil-bacteria"
-data.raw.item["copper-bacteria"].spoil_result="oil-bacteria"
+data.raw.item["copper-bacteria"].spoil_result="oil-bacteria"--启动包
+
+
+
 local start_pack2=table.deepcopy(data.raw["space-platform-starter-pack"]["space-platform-starter-pack"])
-start_pack2.name="satellite-pack"
-start_pack2.initial_items = {
+start_pack2.name="mothership-pack"
+-- start_pack2.initial_items = {{type = "item", name = "space-platform-foundation", amount = 1000},
+-- {type="item",name="asteroid-collector",amount=4},
+-- {type="item",name="cargo-bay",amount=2},
+-- {type="item",name="solar-panel",amount=2},
+-- {type="item",name="inserter",amount=2},
+-- {type="item",name="assembling-machine-1",amount=1}}
+start_pack2.trigger={
   {
-    amount = 10,
-    name = "space-platform-foundation",
-    type = "item"
+    action_delivery = {
+      source_effects = {
+        {
+          entity_name = "cargo-landing-pad",
+          type = "create-entity"
+        }
+      },
+      type = "instant"
+    },
+    type = "direct"
   }
 }
+
 data:extend{
   start_pack2
 }
+-- local tiles=start_pack2.tiles
+-- for _,tile in pairs(tiles) do
+--   tile.tile="overgrowth-yumako-soil"
+-- end
+-- table.insert(tiles,{
+--   position = {
+--     5,
+--     6
+--   },
+--   tile = "space-platform-foundation"
+-- })
+-- start_pack2.tiles=tiles

@@ -3,5 +3,5 @@ require("prototypes/recipe")
 require("prototypes/technology")
 require("prototypes/plant")
 require("prototypes/asteroid")
-require("prototypes/mother_ship")
+data.raw["rocket-silo"]["rocket-silo"].rocket_parts_required = 10
 -- require("asteroids")
