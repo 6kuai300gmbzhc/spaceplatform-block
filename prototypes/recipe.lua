@@ -6,6 +6,27 @@ data.raw.recipe["space-platform-foundation"].ingredients={
   {type = "item", name = "metallic-asteroid-chunk", amount = 1}
 }
 data:extend({
+    {
+        type="recipe",
+        name="mothership_pack",
+        icon="__base__/graphics/icons/satellite.png",
+        enabled = false,
+        energy_required = 60,
+        ingredients = {
+          {
+            amount = 1,
+            name = "space-platform-starter-pack",
+            type = "item"
+          }
+        },
+        results = {
+          {
+            amount = 1,
+            name = "mothership-pack",
+            type = "item"
+          }
+        },
+    },
     {--简单金属星岩粉碎
         type = "recipe",
         name = "simple-metallic-asteroid-crushing",
@@ -91,6 +112,27 @@ data:extend({
         allow_productivity = true,
         allow_decomposition = false,
         category = "crushing",
+    },
+    {--铀矿星岩粉碎
+    type = "recipe",
+    name = "uranium-asteroid-crushing",
+    icon = "__spaceship-beginning__/graphics/icons/uranium-asteroid-crushing.png",
+    subgroup = "space-crushing",
+    order = "b-a-d",
+    auto_recycle = false,
+    enabled = false,
+    energy_required = 2,
+    ingredients =
+    {
+      {type = "item", name = "uranium-asteroid-chunk", amount = 1}
+    },
+    results=
+    {
+      {type="item", name="uranium-ore", amount=10}
+    },
+    allow_productivity = true,
+    allow_decomposition = false,
+    category = "crushing",
     },
     {--生物质收集
         type = "recipe",
@@ -333,35 +375,13 @@ data:extend({
       {type = "item", name = "oil-bacteria",amount_min = 1,amount_max=2,probability=0.8}
     },
     crafting_machine_tint =oil_crafting_machine_tint
-  },
-  {--冶炼油细菌出沥青铀矿
-    allow_productivity = true,
-    category = "smelting",
-    energy_required = 4,
-    ingredients = {
-      {
-        amount = 1,
-        name = "oil-bacteria",
-        type = "item"
-      }
-    },
-    name = "pitchblende",
-    results = {
-      {
-        amount = 1,
-        name = "pitchblende",
-        type = "item"
-      }
-    },
-    type = "recipe",
-    enabled=false
   }
 })
-data.raw.recipe["uranium-processing"].ingredients={
-  {type = "item", name = "pitchblende", amount = 1}
-}
+-- data.raw.recipe["uranium-processing"].ingredients={
+--   {type = "item", name = "pitchblende", amount = 1}
+-- }
 local advanced_metallic_asteroid_crushing=table.deepcopy(data.raw.recipe["advanced-metallic-asteroid-crushing"])
-advanced_metallic_asteroid_crushing.category="crafting-with-fluid-or-metallurgy"
+advanced_metallic_asteroid_crushing.category="metallurgy"
 advanced_metallic_asteroid_crushing.results={
   {type="fluid",name="lava",amount=400}
 }
@@ -369,9 +389,9 @@ data.raw.recipe["advanced-metallic-asteroid-crushing"]=advanced_metallic_asteroi
 data:extend{
   {--岩浆提取钨
   type = "recipe",
-  name = "molten-tungsten-from-lava",
+  name = "tungsten-from-lava",
   icon = "__spaceship-beginning__/graphics/icons/molten-tungsten-from-lava.png",
-  category = "crafting-with-fluid-or-metallurgy",
+  category = "metallurgy",
   subgroup = "vulcanus-processes",
   order = "b-c",
   enabled = false,
@@ -380,44 +400,12 @@ data:extend{
   ingredients =
   {
     {type = "fluid", name = "lava", amount = 500},
-    {type = "item", name = "calcite", amount = 1}
+    {type = "item", name = "tungsten-asteroid-chunk", amount = 1}
   },
   results =
   {
     {amount = 15,name = "stone",type = "item"},
     {amount=10,name="tungsten-ore",type="item"}
-  }
-},
-{--金属星岩循环出钬
-  type = "recipe",
-  name = "metallic-asteroid-recycling",
-  icons ={
-  {
-    icon = "__quality__/graphics/icons/recycling.png"
-  },
-  {
-    icon = "__space-age__/graphics/icons/metallic-asteroid-chunk.png",
-    scale = 0.4
-  },
-  {
-    icon = "__quality__/graphics/icons/recycling-top.png"
-  }
-  },
-  category = "recycling",
-  subgroup = "fulgora-processes",
-  order = "a-a-b",
-  enabled = false,
-  allow_productivity = true,
-  energy_required = 10,
-  ingredients =
-  {
-    {type = "item", name = "metallic-asteroid-chunk", amount = 1}
-  },
-  results =
-  {
-    {amount = 12,name = "iron-ore",type = "item",probability = 0.5},
-    {amount = 12,name = "copper-ore",type = "item",probability = 0.5},
-    {amount = 1,name = "holmium-ore",type = "item",probability = 0.1}
   }
 }
 }--下调回收出种子概率，无法实现增殖（很邪恶）
@@ -448,7 +436,7 @@ data.raw.recipe["jellynut-processing"].results={
   }
 }
 data:extend{
-  {
+  {--结晶转生物溶剂
     allow_productivity = true,
     category = "organic",
     crafting_machine_tint = {
@@ -488,8 +476,24 @@ data:extend{
     type = "recipe"
   }
 }
-
-for i=1,3 do
+data.raw.recipe["holmium-solution"].ingredients = {--钬矿星岩处理
+  {
+    amount = 1,
+    name = "holmium-asteroid-chunk",
+    type = "item"
+  },
+  {
+    amount = 1,
+    name = "stone",
+    type = "item"
+  },
+  {
+    amount = 10,
+    name = "water",
+    type = "fluid"
+  }
+}
+for i=1,3 do--冰星的星岩处理
   local aquilo_asteroid_recipe={
     allow_productivity = true,
     category = "oil-processing",
@@ -552,7 +556,7 @@ for i=1,3 do
   -- table.insert(aquilo_asteroid_recipe.results,aquilo_asteroid_result[i<(i)%3+1 and i or (i)%3+1])
   data:extend{aquilo_asteroid_recipe}
 end
-for _,i in pairs({"iron","copper"}) do
+for _,i in pairs({"iron","copper"}) do--调整铜铁细菌
   data.raw.recipe[i.."-bacteria"].ingredients={
     {
       amount = 1,
@@ -606,3 +610,16 @@ for _,i in pairs({"iron","copper"}) do
     }
   }
 end
+-- --减少区段成本
+-- data.raw.recipe["rocket-part"].ingredients={
+--   {
+--     amount = 1,
+--     name = "low-density-structure",
+--     type = "item"
+--   },
+--   {
+--     amount = 1,
+--     name = "rocket-fuel",
+--     type = "item"
+--   }
+-- }

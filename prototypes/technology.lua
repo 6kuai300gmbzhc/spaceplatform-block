@@ -17,11 +17,13 @@ utils.set_prerequisites("electronics", {"space-science-pack"})
 utils.set_prerequisites("steam-power", {"space-science-pack"})
 utils.set_prerequisites("logistic-system", {"logistic-robotics"})
 utils.add_recipes("steel-processing",{"space-platform-foundation"})
-utils.set_prerequisites("space-platform",{"processing-unit","electric-engine","low-density-structure"})
+utils.set_prerequisites("space-platform",{"rocket-silo"})
 -- utils.remove_recipes("space-platform",{"metallic-astroid-crushing","carbonic-astroid-crushing","oxide-astroid-crushing"})
 -- utils.add_recipes("space-science-pack",{"metallic-astroid-crushing","carbonic-astroid-crushing","oxide-astroid-crushing"})
 utils.set_prerequisites("space-platform-thruster",{"space-platform"})
 utils.set_prerequisites("rocket-silo",{"processing-unit","electric-engine","low-density-structure"})
+utils.add_recipes("rocket-silo",{"space-platform-starter-pack","mothership_pack"})
+
 utils.remove_recipes("space-platform-thruster",{"ice-melting"})
 data.raw["technology"]["rocket-silo"]["effects"]={{
     type = "unlock-space-location",
@@ -104,8 +106,8 @@ utils.add_prerequisites("captivity", {"planet-discovery-nauvis"})
 utils.add_prerequisites("fish-breeding", {"planet-discovery-nauvis"})
 utils.add_prerequisites("tree-seeding", {"planet-discovery-nauvis"})
 utils.add_prerequisites("planet-discovery-aquilo", {"planet-discovery-nauvis"})
-utils.add_recipes("uranium-mining", {"pitchblende"})
-utils.set_trigger("uranium-processing", {type = "craft-item", item = "pitchblende",count=5})
+utils.add_recipes("uranium-mining", {"uranium-asteroid-crushing"})
+utils.set_trigger("uranium-processing", {type = "craft-item", item = "uranium-ore",count=50})
 
 --火星科技
 utils.set_trigger("calcite-processing", {type = "craft-item", item = "calcite",count=5})
@@ -114,7 +116,7 @@ utils.set_trigger("tungsten-steel",{type="craft-item",item="foundry",amount=1})
 utils.set_trigger("tungsten-carbide",{type = "craft-item", item = "tungsten-ore",count=5})
 data.raw.technology["big-mining-drill"].enabled=false
 data.raw.technology["electric-mining-drill"].enabled=false
-utils.add_recipes("planet-discovery-vulcanus",{"advanced-oxide-asteroid-crushing","advanced-metallic-asteroid-crushing","molten-tungsten-from-lava"})
+utils.add_recipes("planet-discovery-vulcanus",{"advanced-oxide-asteroid-crushing","advanced-metallic-asteroid-crushing","tungsten-from-lava"})
 
 --草星科技
 utils.remove_recipes("rocket-turret",{"coal-synthesis"})
@@ -154,11 +156,29 @@ scrap_4.unit.count_formula = "1.5^(L-3)*500"
 utils.add_prerequisites("scrap-recycling-productivity", {scrap_3.name})
 
 data:extend{scrap_1, scrap_2, scrap_3}
-
-utils.add_recipes("recycling",{"metallic-asteroid-recycling"})
 utils.remove_recipes("recycling",{"scrap-recycling"})
 --冰星科技
 utils.add_recipes("planet-discovery-aquilo",{"aquilo-asteroid-smelting-1","aquilo-asteroid-smelting-2","aquilo-asteroid-smelting-3"})
+
+--区段产能科技
+local rocket_final = table.deepcopy(data.raw.technology["rocket-part-productivity"])
+data.raw.technology["rocket-part-productivity"]=nil
+rocket_final.unit.count_formula = "1.2^(L+30)*2"
+rocket_final.prerequisites = {"rocket-part-productivity-stage2"}
+rocket_final.name="rocket-part-productivity-stage3"
+local rocket_2 = table.deepcopy(rocket_final)
+rocket_2.max_level=15
+rocket_2.unit.count_formula = "1.2^(L+15)*2"
+rocket_2.unit.ingredients={{"automation-science-pack",1},{"logistic-science-pack",1},{"chemical-science-pack",1},{"production-science-pack",1}}
+rocket_2.prerequisites = {"rocket-part-productivity-stage1"}
+rocket_2.name="rocket-part-productivity-stage2"
+local rocket_1 = table.deepcopy(rocket_2)
+rocket_1.name="rocket-part-productivity-stage1"
+rocket_1.unit.count_formula = "1.2^L*2"
+rocket_1.unit.ingredients={{"automation-science-pack",1},{"logistic-science-pack",1},{"chemical-science-pack",1}}
+rocket_1.max_level=15
+rocket_1.prerequisites={"rocket-silo"}
+data.extend{rocket_1,rocket_2,rocket_final}
 --加白瓶
 for _, technology in pairs(data.raw.technology) do
     if technology.unit then

@@ -9,15 +9,17 @@ data.raw.technology[tech.name] = tech
 
 --调整表面条件为0气压
 for _,collection in pairs (data.raw) do
-    for _,thing in pairs (collection) do
+    for name,thing in pairs (collection) do
 	    if thing.surface_conditions then thing.surface_conditions = {      {
             property = "pressure",
             min = 0,
             max = 0
           }} end
+      if thing.type=="recipe"then
+        thing.maximum_productivity=100
+      end
     end
 end
-
 -- data:extend{
 --   {
 --     type = "space-connection",
