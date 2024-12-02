@@ -6,7 +6,7 @@ data:extend{
             type = "create-entity"
           }
         },
-        icon = "__spaceship-beginning__/graphics/icons/organic-asteroid-chunk.png",
+        icon = "__spaceplatform-block__/graphics/icons/organic-asteroid-chunk.png",
         icon_size = 64,
         minable = {
           mining_particle = "carbonic-asteroid-chunk-particle-medium",
@@ -73,18 +73,18 @@ data:extend{
           variations = {
             {
               color_texture = {
-                filename = "__spaceship-beginning__/graphics/asteroid/chunk/organic/asteroid-organic-chunk-colour-01.png",
+                filename = "__spaceplatform-block__/graphics/asteroid/chunk/organic/asteroid-organic-chunk-colour-01.png",
                 scale = 0.5,
                 size = 50
               },
               normal_map = {
-                filename = "__spaceship-beginning__/graphics/asteroid/chunk/organic/asteroid-organic-chunk-normal-01.png",
+                filename = "__spaceplatform-block__/graphics/asteroid/chunk/organic/asteroid-organic-chunk-normal-01.png",
                 premul_alpha = false,
                 scale = 0.5,
                 size = 50
               },
               roughness_map = {
-                filename = "__spaceship-beginning__/graphics/asteroid/chunk/organic/asteroid-organic-chunk-roughness-01.png",
+                filename = "__spaceplatform-block__/graphics/asteroid/chunk/organic/asteroid-organic-chunk-roughness-01.png",
                 premul_alpha = false,
                 scale = 0.5,
                 size = 50
@@ -104,7 +104,7 @@ data:extend{
         type = "create-entity"
       }
     },
-    icon = "__spaceship-beginning__/graphics/icons/aquilo-asteroid-chunk.png",
+    icon = "__spaceplatform-block__/graphics/icons/aquilo-asteroid-chunk.png",
     icon_size = 64,
     minable = {
       mining_particle = "carbonic-asteroid-chunk-particle-medium",
@@ -171,18 +171,18 @@ data:extend{
       variations = {
         {
           color_texture = {
-            filename = "__spaceship-beginning__/graphics/asteroid/chunk/aquilo/asteroid-aquilo-chunk-colour-01.png",
+            filename = "__spaceplatform-block__/graphics/asteroid/chunk/aquilo/asteroid-aquilo-chunk-colour-01.png",
             scale = 0.5,
             size = 50
           },
           normal_map = {
-            filename = "__spaceship-beginning__/graphics/asteroid/chunk/aquilo/asteroid-aquilo-chunk-normal-01.png",
+            filename = "__spaceplatform-block__/graphics/asteroid/chunk/aquilo/asteroid-aquilo-chunk-normal-01.png",
             premul_alpha = false,
             scale = 0.5,
             size = 50
           },
           roughness_map = {
-            filename = "__spaceship-beginning__/graphics/asteroid/chunk/aquilo/asteroid-aquilo-chunk-roughness-01.png",
+            filename = "__spaceplatform-block__/graphics/asteroid/chunk/aquilo/asteroid-aquilo-chunk-roughness-01.png",
             premul_alpha = false,
             scale = 0.5,
             size = 50
@@ -202,7 +202,7 @@ data:extend{
           type = "create-entity"
         }
       },
-      icon = "__spaceship-beginning__/graphics/icons/tungsten-asteroid-chunk.png",
+      icon = "__spaceplatform-block__/graphics/icons/tungsten-asteroid-chunk.png",
       icon_size = 64,
       minable = {
         mining_particle = "oxide-asteroid-chunk-particle-medium",
@@ -269,18 +269,18 @@ data:extend{
         variations = {
           {
             color_texture = {
-              filename = "__spaceship-beginning__/graphics/asteroid/chunk/tungsten/asteroid-tungsten-chunk-colour-01.png",
+              filename = "__spaceplatform-block__/graphics/asteroid/chunk/tungsten/asteroid-tungsten-chunk-colour-01.png",
               scale = 0.5,
               size = 50
             },
             normal_map = {
-              filename = "__spaceship-beginning__/graphics/asteroid/chunk/tungsten/asteroid-tungsten-chunk-normal-01.png",
+              filename = "__spaceplatform-block__/graphics/asteroid/chunk/tungsten/asteroid-tungsten-chunk-normal-01.png",
               premul_alpha = false,
               scale = 0.5,
               size = 50
             },
             roughness_map = {
-              filename = "__spaceship-beginning__/graphics/asteroid/chunk/tungsten/asteroid-tungsten-chunk-roughness-01.png",
+              filename = "__spaceplatform-block__/graphics/asteroid/chunk/tungsten/asteroid-tungsten-chunk-roughness-01.png",
               premul_alpha = false,
               scale = 0.5,
               size = 50
@@ -300,7 +300,7 @@ data:extend{
         type = "create-entity"
       }
     },
-    icon = "__spaceship-beginning__/graphics/icons/uranium-asteroid-chunk.png",
+    icon = "__spaceplatform-block__/graphics/icons/uranium-asteroid-chunk.png",
     icon_size = 64,
     minable = {
       mining_particle = "oxide-asteroid-chunk-particle-medium",
@@ -367,18 +367,18 @@ data:extend{
       variations = {
         {
           color_texture = {
-            filename = "__spaceship-beginning__/graphics/asteroid/chunk/uranium/asteroid-uranium-chunk-colour-01.png",
+            filename = "__spaceplatform-block__/graphics/asteroid/chunk/uranium/asteroid-uranium-chunk-colour-01.png",
             scale = 0.5,
             size = 50
           },
           normal_map = {
-            filename = "__spaceship-beginning__/graphics/asteroid/chunk/uranium/asteroid-uranium-chunk-normal-01.png",
+            filename = "__spaceplatform-block__/graphics/asteroid/chunk/uranium/asteroid-uranium-chunk-normal-01.png",
             premul_alpha = false,
             scale = 0.5,
             size = 50
           },
           roughness_map = {
-            filename = "__spaceship-beginning__/graphics/asteroid/chunk/uranium/asteroid-uranium-chunk-roughness-01.png",
+            filename = "__spaceplatform-block__/graphics/asteroid/chunk/uranium/asteroid-uranium-chunk-roughness-01.png",
             premul_alpha = false,
             scale = 0.5,
             size = 50
@@ -398,7 +398,7 @@ data:extend{
           type = "create-entity"
         }
       },
-      icon = "__spaceship-beginning__/graphics/icons/holmium-asteroid-chunk.png",
+      icon = "__spaceplatform-block__/graphics/icons/holmium-asteroid-chunk.png",
       icon_size = 64,
       minable = {
         mining_particle = "promethium-asteroid-chunk-particle-medium",
@@ -465,18 +465,18 @@ data:extend{
         variations = {
           {
             color_texture = {
-              filename = "__spaceship-beginning__/graphics/asteroid/chunk/holmium/asteroid-holmium-chunk-colour-01.png",
+              filename = "__spaceplatform-block__/graphics/asteroid/chunk/holmium/asteroid-holmium-chunk-colour-01.png",
               scale = 0.5,
               size = 50
             },
             normal_map = {
-              filename = "__spaceship-beginning__/graphics/asteroid/chunk/holmium/asteroid-holmium-chunk-normal-01.png",
+              filename = "__spaceplatform-block__/graphics/asteroid/chunk/holmium/asteroid-holmium-chunk-normal-01.png",
               premul_alpha = false,
               scale = 0.5,
               size = 50
             },
             roughness_map = {
-              filename = "__spaceship-beginning__/graphics/asteroid/chunk/holmium/asteroid-holmium-chunk-roughness-01.png",
+              filename = "__spaceplatform-block__/graphics/asteroid/chunk/holmium/asteroid-holmium-chunk-roughness-01.png",
               premul_alpha = false,
               scale = 0.5,
               size = 50

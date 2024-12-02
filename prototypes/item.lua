@@ -4,7 +4,7 @@ data:extend({
     {--生物溶剂
         type = "fluid",
         name = "organic-solution",
-        icon = "__spaceship-beginning__/graphics/icons/organic-solution.png",
+        icon = "__spaceplatform-block__/graphics/icons/organic-solution.png",
         subgroup = "fluid",
         order = "b-a-a",
         default_temperature = 40,
@@ -16,10 +16,10 @@ data:extend({
     {--普通细菌
       type = "item",
       name = "bacteria",
-      icon = "__spaceship-beginning__/graphics/icons/bacteria.png",
+      icon = "__spaceplatform-block__/graphics/icons/bacteria.png",
       pictures =
       {
-        { size = 64, filename = "__spaceship-beginning__/graphics/icons/bacteria.png", scale = 0.5, mipmap_count = 4 }
+        { size = 64, filename = "__spaceplatform-block__/graphics/icons/bacteria.png", scale = 0.5, mipmap_count = 4 }
       },
       subgroup = "agriculture-processes",
       order = "b[agriculture]-c[bacteria]",
@@ -35,10 +35,10 @@ data:extend({
     {--塑料细菌
       type = "item",
       name = "plastic-bacteria",
-      icon = "__spaceship-beginning__/graphics/icons/plastic-bacteria.png",
+      icon = "__spaceplatform-block__/graphics/icons/plastic-bacteria.png",
       pictures =
       {
-        { size = 64, filename = "__spaceship-beginning__/graphics/icons/plastic-bacteria.png", scale = 0.5, mipmap_count = 4 }
+        { size = 64, filename = "__spaceplatform-block__/graphics/icons/plastic-bacteria.png", scale = 0.5, mipmap_count = 4 }
       },
       subgroup = "agriculture-processes",
       order = "b[agriculture]-f",
@@ -54,10 +54,10 @@ data:extend({
     {--硫细菌
       type = "item",
       name = "sulfur-bacteria",
-      icon = "__spaceship-beginning__/graphics/icons/sulfur-bacteria.png",
+      icon = "__spaceplatform-block__/graphics/icons/sulfur-bacteria.png",
       pictures =
       {
-        { size = 64, filename = "__spaceship-beginning__/graphics/icons/sulfur-bacteria.png", scale = 0.5, mipmap_count = 4 }
+        { size = 64, filename = "__spaceplatform-block__/graphics/icons/sulfur-bacteria.png", scale = 0.5, mipmap_count = 4 }
       },
       subgroup = "agriculture-processes",
       order = "b[agriculture]-g",
@@ -73,10 +73,10 @@ data:extend({
     {--油细菌
       type = "item",
       name = "oil-bacteria",
-      icon = "__spaceship-beginning__/graphics/icons/oil-bacteria.png",
+      icon = "__spaceplatform-block__/graphics/icons/oil-bacteria.png",
       pictures =
       {
-        { size = 64, filename = "__spaceship-beginning__/graphics/icons/oil-bacteria.png", scale = 0.5, mipmap_count = 4 }
+        { size = 64, filename = "__spaceplatform-block__/graphics/icons/oil-bacteria.png", scale = 0.5, mipmap_count = 4 }
       },
       subgroup = "agriculture-processes",
       order = "b[agriculture]-h",
@@ -92,10 +92,10 @@ data:extend({
     {--沥青铀矿
       type = "item",
       name = "pitchblende",
-      icon = "__spaceship-beginning__/graphics/icons/pitchblende.png",
+      icon = "__spaceplatform-block__/graphics/icons/pitchblende.png",
       pictures =
       {
-        { size = 64, filename = "__spaceship-beginning__/graphics/icons/pitchblende.png", scale = 0.5, mipmap_count = 4 }
+        { size = 64, filename = "__spaceplatform-block__/graphics/icons/pitchblende.png", scale = 0.5, mipmap_count = 4 }
       },
       subgroup = "intermediate-product",
       order = "b-a",
@@ -118,7 +118,7 @@ data:extend({
     {--有机质星岩
       type="item",
       name="organic-asteroid-chunk",
-      icon="__spaceship-beginning__/graphics/icons/organic-asteroid-chunk.png",
+      icon="__spaceplatform-block__/graphics/icons/organic-asteroid-chunk.png",
       subgroup="space-material",
       stack_size = 1,
       default_import_location = "nauvis",
@@ -183,7 +183,7 @@ data:extend({
     {--铀矿星岩
     type="item",
     name="uranium-asteroid-chunk",
-    icon="__spaceship-beginning__/graphics/icons/uranium-asteroid-chunk.png",
+    icon="__spaceplatform-block__/graphics/icons/uranium-asteroid-chunk.png",
     subgroup="space-material",
     stack_size = 1,
     default_import_location = "nauvisorbit",
@@ -193,7 +193,7 @@ data:extend({
     {--钨矿星岩
     type="item",
     name="tungsten-asteroid-chunk",
-    icon="__spaceship-beginning__/graphics/icons/tungsten-asteroid-chunk.png",
+    icon="__spaceplatform-block__/graphics/icons/tungsten-asteroid-chunk.png",
     subgroup="space-material",
     stack_size = 1,
     default_import_location = "vulcanus",
@@ -203,7 +203,7 @@ data:extend({
     {--钬矿星岩
     type="item",
     name="holmium-asteroid-chunk",
-    icon="__spaceship-beginning__/graphics/icons/holmium-asteroid-chunk.png",
+    icon="__spaceplatform-block__/graphics/icons/holmium-asteroid-chunk.png",
     subgroup="space-material",
     stack_size = 1,
     default_import_location = "fulgora",
@@ -213,7 +213,7 @@ data:extend({
     {--冰星星岩
     type="item",
     name="aquilo-asteroid-chunk",
-    icon="__spaceship-beginning__/graphics/icons/aquilo-asteroid-chunk.png",
+    icon="__spaceplatform-block__/graphics/icons/aquilo-asteroid-chunk.png",
     subgroup="space-material",
     stack_size = 1,
     default_import_location = "aquilo",

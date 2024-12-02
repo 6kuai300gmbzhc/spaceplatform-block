@@ -5,6 +5,28 @@ data.raw.recipe["iron-bacteria-cultivation"].order="e-a-c"
 data.raw.recipe["space-platform-foundation"].ingredients={
   {type = "item", name = "metallic-asteroid-chunk", amount = 1}
 }
+data.raw.recipe["asteroid-collector"].ingredients={
+  {
+    amount = 5,
+    name = "electronic-circuit",
+    type = "item"
+  },
+  {
+    amount = 5,
+    name = "engine-unit",
+    type = "item"
+  },
+  {
+    amount = 20,
+    name = "steel-plate",
+    type = "item"
+  }
+}
+data.raw.recipe["metallic-asteroid-crushing"].results=    {
+  {type = "item", name = "iron-ore", amount = 10},
+  {type = "item", name = "copper-ore", amount = 10},
+  {type = "item", name = "metallic-asteroid-chunk", amount = 1, probability = 0.2}
+}
 data:extend({
     {
         type="recipe",
@@ -30,20 +52,20 @@ data:extend({
     {--简单金属星岩粉碎
         type = "recipe",
         name = "simple-metallic-asteroid-crushing",
-        icon = "__spaceship-beginning__/graphics/icons/simple-metallic-asteroid-crushing.png",
+        icon = "__spaceplatform-block__/graphics/icons/simple-metallic-asteroid-crushing.png",
         subgroup = "space-crushing",
         order = "b-a-a",
         auto_recycle = false,
         enabled = true,
-        energy_required = 5,
+        energy_required = 2,
         ingredients =
         {
           {type = "item", name = "metallic-asteroid-chunk", amount = 1}
         },
         results=
         {
-          {type="item", name="iron-ore", amount=5},
-          {type="item", name="copper-ore", amount=2},
+          {type="item", name="iron-ore", amount=8},
+          {type="item", name="copper-ore", amount=8},
           {type="item", name="stone", amount=5}
         },
         allow_productivity = true,
@@ -52,19 +74,19 @@ data:extend({
     {--简单碳质星岩粉碎
         type = "recipe",
         name = "simple-carbonic-asteroid-crushing",
-        icon = "__spaceship-beginning__/graphics/icons/simple-carbonic-asteroid-crushing.png",
+        icon = "__spaceplatform-block__/graphics/icons/simple-carbonic-asteroid-crushing.png",
         subgroup = "space-crushing",
         order = "b-a-b",
         auto_recycle = false,
         enabled = true,
-        energy_required = 5,
+        energy_required = 2,
         ingredients =
         {
           {type = "item", name = "carbonic-asteroid-chunk", amount = 1}
         },
         results=
         {
-          {type="item", name="carbon", amount=2}
+          {type="item", name="carbon", amount=6}
         },
         allow_productivity = true,
         allow_decomposition = false
@@ -72,19 +94,19 @@ data:extend({
     {--简单氧化星岩粉碎
         type = "recipe",
         name = "simple-oxide-asteroid-crushing",
-        icon = "__spaceship-beginning__/graphics/icons/simple-oxide-asteroid-crushing.png",
+        icon = "__spaceplatform-block__/graphics/icons/simple-oxide-asteroid-crushing.png",
         subgroup = "space-crushing",
         order = "b-a-c",
         auto_recycle = false,
         enabled = true,
-        energy_required = 5,
+        energy_required = 2,
         ingredients =
         {
           {type = "item", name = "oxide-asteroid-chunk", amount = 1}
         },
         results=
         {
-          {type="item", name="ice", amount=1}
+          {type="item", name="ice", amount=3}
         },
         allow_productivity = true,
         allow_decomposition = false
@@ -92,7 +114,7 @@ data:extend({
     {--有机星岩粉碎
         type = "recipe",
         name = "organic-asteroid-crushing",
-        icon = "__spaceship-beginning__/graphics/icons/organic-asteroid-crushing.png",
+        icon = "__spaceplatform-block__/graphics/icons/organic-asteroid-crushing.png",
         subgroup = "space-crushing",
         order = "b-a-d",
         auto_recycle = false,
@@ -116,7 +138,7 @@ data:extend({
     {--铀矿星岩粉碎
     type = "recipe",
     name = "uranium-asteroid-crushing",
-    icon = "__spaceship-beginning__/graphics/icons/uranium-asteroid-crushing.png",
+    icon = "__spaceplatform-block__/graphics/icons/uranium-asteroid-crushing.png",
     subgroup = "space-crushing",
     order = "b-a-d",
     auto_recycle = false,
@@ -137,7 +159,7 @@ data:extend({
     {--生物质收集
         type = "recipe",
         name = "organic-solution-gathering",
-        icon = "__spaceship-beginning__/graphics/icons/organic-solution-gathering.png",
+        icon = "__spaceplatform-block__/graphics/icons/organic-solution-gathering.png",
         subgroup = "space-crushing",
         category = "chemistry",
         order = "b-b-a",
@@ -167,7 +189,7 @@ data:extend({
     {--细菌发现
       type = "recipe",
       name = "bacteria-discovering",
-      icon = "__spaceship-beginning__/graphics/icons/bacteria.png",
+      icon = "__spaceplatform-block__/graphics/icons/bacteria.png",
       category = "organic-or-chemistry",
       subgroup = "agriculture-processes",
       order = "e[bacteria]-a[bacteria]-a",
@@ -193,7 +215,7 @@ data:extend({
     {--细菌培养
       type = "recipe",
       name = "bacteria-cultivation",
-      icon = "__spaceship-beginning__/graphics/icons/bacteria-cultivation.png",
+      icon = "__spaceplatform-block__/graphics/icons/bacteria-cultivation.png",
       category = "organic-or-chemistry",
       subgroup = "agriculture-processes",
       order = "e[bacteria]-b-a",
@@ -222,7 +244,7 @@ data:extend({
     {--细菌提取生物溶剂
       type = "recipe",
       name = "extracting-organic-solution-from-bacteria",
-      icon = "__spaceship-beginning__/graphics/icons/organic-solution.png",
+      icon = "__spaceplatform-block__/graphics/icons/organic-solution.png",
       category = "organic-or-chemistry",
       subgroup = "agriculture-processes",
       order = "e[bacteria]-c-b",
@@ -250,7 +272,7 @@ data:extend({
     {--碳质星岩定向选择
       type = "recipe",
       name = "carbon-astroid-natural-selecting",
-      icon = "__spaceship-beginning__/graphics/icons/carbon-astroid-natural-selecting.png",
+      icon = "__spaceplatform-block__/graphics/icons/carbon-astroid-natural-selecting.png",
       category = "organic-or-chemistry",
       subgroup = "agriculture-processes",
       order = "e[bacteria]-c-c",
@@ -285,7 +307,7 @@ data:extend({
   {--塑料细菌培养
     type = "recipe",
     name = "plastic-bacteria-cultivation",
-    icon = "__spaceship-beginning__/graphics/icons/plastic-bacteria-cultivation.png",
+    icon = "__spaceplatform-block__/graphics/icons/plastic-bacteria-cultivation.png",
     category = "organic-or-chemistry",
     subgroup = "agriculture-processes",
     order = "e[bacteria]-b-b",
@@ -308,7 +330,7 @@ data:extend({
   {--硫细菌培养
     type = "recipe",
     name = "sulfur-bacteria-cultivation",
-    icon = "__spaceship-beginning__/graphics/icons/sulfur-bacteria-cultivation.png",
+    icon = "__spaceplatform-block__/graphics/icons/sulfur-bacteria-cultivation.png",
     category = "organic-or-chemistry",
     subgroup = "agriculture-processes",
     order = "e[bacteria]-b-c",
@@ -331,7 +353,7 @@ data:extend({
   {--演化为油细菌
     type = "recipe",
     name = "oil-bacteria-evolution",
-    icon = "__spaceship-beginning__/graphics/icons/oil-bacteria.png",
+    icon = "__spaceplatform-block__/graphics/icons/oil-bacteria.png",
     category = "organic-or-chemistry",
     subgroup = "agriculture-processes",
     order = "e[bacteria]-b-d",
@@ -356,7 +378,7 @@ data:extend({
   {--油细菌培养
     type = "recipe",
     name = "oil-bacteria-cultivation",
-    icon = "__spaceship-beginning__/graphics/icons/oil-bacteria-cultivation.png",
+    icon = "__spaceplatform-block__/graphics/icons/oil-bacteria-cultivation.png",
     category = "organic-or-chemistry",
     subgroup = "agriculture-processes",
     order = "e[bacteria]-b-e",
@@ -390,7 +412,7 @@ data:extend{
   {--岩浆提取钨
   type = "recipe",
   name = "tungsten-from-lava",
-  icon = "__spaceship-beginning__/graphics/icons/molten-tungsten-from-lava.png",
+  icon = "__spaceplatform-block__/graphics/icons/molten-tungsten-from-lava.png",
   category = "metallurgy",
   subgroup = "vulcanus-processes",
   order = "b-c",
@@ -455,7 +477,7 @@ data:extend{
     },
     enabled = false,
     energy_required = 2,
-    icon = "__spaceship-beginning__/graphics/icons/organic-solution-from-bioflux.png",
+    icon = "__spaceplatform-block__/graphics/icons/organic-solution-from-bioflux.png",
     ingredients = {
       {
         amount = 1,
@@ -513,7 +535,7 @@ for i=1,3 do--冰星的星岩处理
     },
     enabled = false,
     energy_required = 5,
-    icon = "__spaceship-beginning__/graphics/icons/aquilo-asteroid-smelting-"..i..".png",
+    icon = "__spaceplatform-block__/graphics/icons/aquilo-asteroid-smelting-"..i..".png",
     ingredients = {
       {
         amount = 1,

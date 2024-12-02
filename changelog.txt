@@ -1,3 +1,11 @@
+Version: 0.1.2
+Date: 2024-12-3
+  Features:
+    - 调整了一些科技和配方，降低了前期游戏的坐牢程度
+Version: 0.1.1
+Date: 2024-12-2
+  Features:
+    - 修复了不能解锁小行星带的bug
 Version: 0.0.1
 Date: 2024-11-2
   Features:

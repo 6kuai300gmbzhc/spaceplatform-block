@@ -1,11 +1,7 @@
 require("prototypes/planets")
 local utils = require "utils"
 local asteroid_util = require("__space-age__.prototypes.planet.asteroid-spawn-definitions")
---四级回收
-local tech = data.raw.technology["scrap-recycling-productivity"]
-tech.name = tech.name .. "-4"
-data.raw.technology["scrap-recycling-productivity"] = nil
-data.raw.technology[tech.name] = tech
+
 
 --调整表面条件为0气压
 for _,collection in pairs (data.raw) do

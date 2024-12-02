@@ -36,6 +36,14 @@ function utils.set_unit(name, unit)
 end
 
 ---@param name string
+---@param count integer
+function utils.set_unit(name, count)
+    local technology = technologies[name]
+    technology.unit.count = count
+    technology.research_trigger = nil
+end
+
+---@param name string
 ---@param recipes string[]
 function utils.set_recipes(name, recipes)
     local technology = technologies[name]

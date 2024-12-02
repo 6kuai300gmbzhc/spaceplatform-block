@@ -1,4 +1,5 @@
 local e = defines.events
+
 script.on_init(function()
     if game.tick > 0 then
         storage.init = true
@@ -35,8 +36,11 @@ script.on_init(function()
     end
     storage["planets"]=planets
     storage["random_pack"]=random_packs
+    game.forces.player.unlock_space_location("asteroid-belt-inner")
 end)
-
+script.on_configuration_changed(function ()
+    game.forces.player.unlock_space_location("asteroid-belt-inner")
+end)
 
 script.on_event(e.on_player_created, function(event)
     local player = game.get_player(event.player_index) --[[@as LuaPlayer]]
