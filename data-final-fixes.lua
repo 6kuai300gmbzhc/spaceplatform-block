@@ -6,7 +6,7 @@ local asteroid_util = require("__space-age__.prototypes.planet.asteroid-spawn-de
 --调整表面条件为0气压
 for _,collection in pairs (data.raw) do
     for name,thing in pairs (collection) do
-	    if thing.surface_conditions then thing.surface_conditions = {      {
+	    if thing.surface_conditions then thing.surface_conditions = {{
             property = "pressure",
             min = 0,
             max = 0

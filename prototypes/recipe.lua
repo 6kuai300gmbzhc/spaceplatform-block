@@ -28,7 +28,7 @@ data.raw.recipe["metallic-asteroid-crushing"].results=    {
   {type = "item", name = "metallic-asteroid-chunk", amount = 1, probability = 0.2}
 }
 data:extend({
-    {
+    {--探空启动包
         type="recipe",
         name="mothership_pack",
         icon="__base__/graphics/icons/satellite.png",
@@ -48,6 +48,38 @@ data:extend({
             type = "item"
           }
         },
+    },
+    {--枢纽
+        type="recipe",
+        name="space-platform-hub",
+        icon="__space-age__/graphics/icons/space-platform-hub.png",
+        enabled = false,
+        energy_required = 30,
+        ingredients = {
+          {
+            amount = 200,
+            name = "concrete",
+            type = "item"
+          },
+          {
+            amount = 25,
+            name = "steel-plate",
+            type = "item"
+          },
+          {
+            amount = 10,
+            name = "processing-unit",
+            type = "item"
+          }
+        },
+        results = {
+          {
+            amount = 1,
+            name = "space-platform-hub",
+            type = "item"
+          }
+        },
+        hidden_in_factoriopedia=true
     },
     {--简单金属星岩粉碎
         type = "recipe",

@@ -18,7 +18,7 @@ utils.set_prerequisites("steam-power", {"space-science-pack"})
 utils.set_prerequisites("logistic-system", {"logistic-robotics"})
 utils.add_recipes("steel-processing",{"space-platform-foundation"})
 utils.set_prerequisites("space-platform",{"rocket-silo"})
--- utils.remove_recipes("space-platform",{"metallic-astroid-crushing","carbonic-astroid-crushing","oxide-astroid-crushing"})
+utils.remove_recipes("space-platform",{"metallic-astroid-crushing","carbonic-astroid-crushing","oxide-astroid-crushing","crusher"})
 -- utils.add_recipes("space-science-pack",{"metallic-astroid-crushing","carbonic-astroid-crushing","oxide-astroid-crushing"})
 data.raw["technology"]["rocket-silo"]["effects"]={{
     type = "unlock-space-location",
@@ -27,8 +27,8 @@ data.raw["technology"]["rocket-silo"]["effects"]={{
 }}
 utils.set_prerequisites("space-platform-thruster",{"space-platform"})
 utils.set_prerequisites("rocket-silo",{"processing-unit","electric-engine","low-density-structure"})
-utils.add_recipes("rocket-silo",{"space-platform-starter-pack","mothership_pack"})
-
+utils.add_recipes("rocket-silo",{"space-platform-starter-pack","mothership_pack","rocket-silo"})
+utils.add_recipes("space-platform",{"space-platform-hub"})
 utils.remove_recipes("space-platform-thruster",{"ice-melting"})
 data.raw.technology.landfill.enabled=false
 
@@ -237,26 +237,25 @@ rocket_1.prerequisites={"rocket-silo"}
 data.extend{rocket_1,rocket_2,rocket_final}
 
 --废料科技，指向物质合成
-
-data:extend{{
-    type = "technology",
-    name = "scrap-recycling",
-    icons = util.technology_icon_constant_planet("__spaceplatform-block__/nauvis.png"),
-    icon_size = 256,
-    essential = true,
-    effects = {},
-    prerequisites = {"space-platform-thruster"},
-    unit = {
-        count = 1000,
-        ingredients = {
-            {"automation-science-pack", 1},
-            {"logistic-science-pack", 1},
-            {"chemical-science-pack", 1},
-            {"space-science-pack", 1}
-        },
-        time = 60
-    }
-}}
+-- data:extend{{
+--     type = "technology",
+--     name = "scrap-recycling",
+--     icons = util.technology_icon_constant_planet("__spaceplatform-block__/nauvis.png"),
+--     icon_size = 256,
+--     essential = true,
+--     effects = {},
+--     prerequisites = {"space-platform-thruster"},
+--     unit = {
+--         count = 1000,
+--         ingredients = {
+--             {"automation-science-pack", 1},
+--             {"logistic-science-pack", 1},
+--             {"chemical-science-pack", 1},
+--             {"space-science-pack", 1}
+--         },
+--         time = 60
+--     }
+-- }}
 for _,planet in pairs(data.raw.planet)do--关闭科技发现星球
     if data.raw.technology["planet-discovery-"..planet.name]then
       utils.remove_space_location_to_technology("planet-discovery-"..planet.name,planet.name)

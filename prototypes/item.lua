@@ -236,71 +236,92 @@ data.raw.item["rocket-silo"].weight=1000000
 --   tile = "space-platform-foundation"
 -- })
 -- mothership_pack.tiles=tiles
-local pack_pattern={--启动包
-  create_electric_network = false,
-  drop_sound = {
-    filename = "__base__/sound/item/mechanical-large-inventory-move.ogg",
-    volume = 0.7
-  },
-  icon = "__space-age__/graphics/icons/space-platform-hub.png",
-  initial_items = {
-    {
-      amount = 10,
-      name = "space-platform-foundation",
-      type = "item"
-    }
-  },--没有hub就没有初始物品
-  inventory_move_sound = {
-    filename = "__base__/sound/item/mechanical-large-inventory-move.ogg",
-    volume = 0.7
-  },
-  name = "",
-  order = "z",
-  pick_sound = {
-    filename = "__base__/sound/item/mechanical-large-inventory-pickup.ogg",
-    volume = 0.8
-  },
-  stack_size = 1,
-  subgroup = "space-rocket",
-  surface = "space-platform",
-  trigger = {
-    {
-      action_delivery = {
-        source_effects = {
-          {
-            entity_name = "fish",
-            type = "create-entity"
-          }
-        },
-        type = "instant"
+-- local pack_pattern={--启动包
+--   create_electric_network = false,
+--   drop_sound = {
+--     filename = "__base__/sound/item/mechanical-large-inventory-move.ogg",
+--     volume = 0.7
+--   },
+--   icon = "__space-age__/graphics/icons/space-platform-hub.png",
+--   initial_items = {
+--     {
+--       amount = 10,
+--       name = "space-platform-foundation",
+--       type = "item"
+--     }
+--   },--没有hub就没有初始物品
+--   inventory_move_sound = {
+--     filename = "__base__/sound/item/mechanical-large-inventory-move.ogg",
+--     volume = 0.7
+--   },
+--   name = "",
+--   order = "z",
+--   pick_sound = {
+--     filename = "__base__/sound/item/mechanical-large-inventory-pickup.ogg",
+--     volume = 0.8
+--   },
+--   stack_size = 1,
+--   subgroup = "space-rocket",
+--   surface = "space-platform",
+--   trigger = {
+--     {
+--       action_delivery = {
+--         source_effects = {
+--           {
+--             entity_name = "fish",
+--             type = "create-entity"
+--           }
+--         },
+--         type = "instant"
+--       },
+--       type = "direct"
+--     }
+--   },
+--   type = "space-platform-starter-pack",
+--   weight = 1000000,
+--   hidden=false,
+--   hidden_in_factoriopedia=false,
+--   tiles={}
+-- }
+data.raw["space-platform-starter-pack"]["space-platform-starter-pack"].icon="__spaceplatform-block__/graphics/icons/space-platform-hub.png"
+local pack_pattern=table.deepcopy(data.raw["space-platform-starter-pack"]["space-platform-starter-pack"])
+pack_pattern.create_electric_network = false
+pack_pattern.hidden=true
+pack_pattern.hidden_in_factoriopedia=true
+pack_pattern.trigger={
+  {
+    action_delivery = {
+      source_effects = {
+        {
+          entity_name = "substation",
+          type = "create-entity"
+        }
       },
-      type = "direct"
-    }
-  },
-  type = "space-platform-starter-pack",
-  weight = 1000000,
-  hidden=true,
-  hidden_in_factoriopedia=true,
-  tiles={}
+      type = "instant"
+    },
+    type = "direct"
+  }
 }
 
-for i=-5,5 do
-  for j=-5,5 do
-    local tile=
-    {
-        position = {
-          i,
-          j
-        },
-        tile = "space-platform-foundation"
-    }
-    table.insert(pack_pattern.tiles,tile)
-  end
-end-- -5~5填充地板
+-- for i=-5,5 do
+--   for j=-5,5 do
+--     local tile=
+--     {
+--         position = {
+--           i,
+--           j
+--         },
+--         tile = "space-platform-foundation"
+--     }
+--     table.insert(pack_pattern.tiles,tile)
+--   end
+-- end-- -5~5填充地板
 --添加给平台准备的启动包
 local normal_pack = table.deepcopy(pack_pattern)
 normal_pack.name="normal-pack"
 local mothership_pack=table.deepcopy(pack_pattern)
+mothership_pack.hidden=false
+mothership_pack.hidden_in_factoriopedia=false
 mothership_pack.name="mothership-pack"
 mothership_pack.icon="__base__/graphics/icons/satellite.png"
 mothership_pack.trigger={
