@@ -28,18 +28,89 @@ data.raw.recipe["metallic-asteroid-crushing"].results=    {
   {type = "item", name = "metallic-asteroid-chunk", amount = 1, probability = 0.2}
 }
 data:extend({
+    {--太阳火箭发射井
+      type="recipe",
+      name="sol-rocket-silo",
+      icon="__spaceplatform-block__/graphics/icons/sol-rocket-silo.png",
+      enabled = false,
+      energy_required = 60,
+      ingredients = {
+        {
+          amount = 1,
+          name = "rocket-silo",
+          type = "item"
+        },
+        {
+          amount = 200,
+          name = "tungsten-plate",
+          type = "item"
+        },
+        {
+          amount = 100,
+          name = "foundation",
+          type = "item"
+        }
+      },
+      results = {
+        {
+          amount = 1,
+          name = "sol-rocket-silo",
+          type = "item"
+        }
+      },
+    },
+    {
+      allow_productivity = false,
+      category = "rocket-building",
+      enabled = false,
+      energy_required = 120,
+      hide_from_player_crafting = true,
+      ingredients = {
+        {
+          amount = 10,
+          name = "quantum-processor",
+          type = "item"
+        },
+        {
+          amount = 100,
+          name = "low-density-structure",
+          type = "item"
+        },
+        {
+          amount = 100,
+          name = "holmium-plate",
+          type = "item"
+        },
+        {
+          amount = 500,
+          name = "rocket-fuel",
+          type = "item"
+        }
+      },
+      localised_name = "recipe.sol-rocket-part",
+      name = "sol-rocket-part",
+      results = {
+        {
+          amount = 1,
+          name = "rocket-part",
+          type = "item"
+        }
+      },
+      type = "recipe"
+    },
     {--探空启动包
         type="recipe",
         name="mothership_pack",
         icon="__base__/graphics/icons/satellite.png",
         enabled = false,
         energy_required = 60,
-        ingredients = {
-          {
-            amount = 1,
-            name = "space-platform-starter-pack",
-            type = "item"
-          }
+        ingredients ={
+          {type = "item", name = "low-density-structure", amount = 100},
+          {type = "item", name = "solar-panel", amount = 100},
+          {type = "item", name = "accumulator", amount = 100},
+          {type = "item", name = "radar", amount = 5},
+          {type = "item", name = "processing-unit", amount = 100},
+          {type = "item", name = "rocket-fuel", amount = 50}
         },
         results = {
           {
@@ -644,9 +715,9 @@ for _,i in pairs({"iron","copper"}) do--调整铜铁细菌
       type = "item"
     },
     {
-      amount = 20,
-      name = "organic-solution",
-      type = "fluid"
+      amount = 1,
+      name = "metallic-asteroid-chunk",
+      type = "item"
     }
   }
   data.raw.recipe[i.."-bacteria-cultivation"].results={
@@ -658,22 +729,110 @@ for _,i in pairs({"iron","copper"}) do--调整铜铁细菌
       probability=0.8
     },
     {
-      amount = 2,
+      amount = 1,
       name = i.."-ore",
       type = "item"
+    },
+    {
+      amount = 1,
+      name = "metallic-asteroid-chunk",
+      type = "item",
+      probability=0.98
     }
   }
 end
--- --减少区段成本
--- data.raw.recipe["rocket-part"].ingredients={
---   {
---     amount = 1,
---     name = "low-density-structure",
---     type = "item"
---   },
---   {
---     amount = 1,
---     name = "rocket-fuel",
---     type = "item"
---   }
--- }
+data:extend{
+  {
+    allow_productivity = true,
+    category = "organic-or-hand-crafting",
+    crafting_machine_tint = {
+      primary = {
+        a = 1,
+        b = 0.31000000000000001,
+        g = 0.006,
+        r = 0.97599999999999998
+      },
+      secondary = {
+        a = 1,
+        b = 0.29299999999999997,
+        g = 0.70099999999999998,
+        r = 0.80500000000000007
+      }
+    },
+    enabled = false,
+    energy_required = 10,
+    icon = "__spaceplatform-block__/graphics/icons/cuttlepop-seed.png",
+    ingredients = {
+      {
+        amount = 2,
+        name = "yumako-seed",
+        type = "item"
+      },
+      {
+        amount = 50,
+        name = "copper-bacteria",
+        type = "item"
+      }
+    },
+    localised_name = "recipe.cuttlepop-seed",
+    name = "cuttlepop-seed",
+    order = "a[seeds]-a[yumako-processing]",
+    results = {
+      {
+        amount = 1,
+        name = "cuttlepop-seed",
+        type = "item"
+      }
+    },
+    subgroup = "agriculture-processes",
+    type = "recipe"
+  },
+  {
+    allow_productivity = true,
+    category = "organic-or-hand-crafting",
+    crafting_machine_tint = {
+      primary = {
+        a = 1,
+        b = 0.69299999999999997,
+        g = 0.70099999999999998,
+        r = 0.40500000000000007
+      },
+      secondary = {
+        a = 1,
+        b = 0.70999999999999996,
+        g = 0.40600000000000005,
+        r = 0.87599999999999998
+      }
+    },
+    enabled = false,
+    energy_required = 10,
+    icon = "__spaceplatform-block__/graphics/icons/hairyclubnub-seed.png",
+    ingredients = {
+      {
+        amount = 2,
+        name = "jellynut-seed",
+        type = "item"
+      },
+      {
+        amount = 50,
+        name = "iron-bacteria",
+        type = "item"
+      }
+    },
+    localised_name = "recipe.hairyclubnub-seed",
+    name = "hairyclubnub-seed",
+    order = "a[seeds]-b[jellynut-processing]",
+    results = {
+      {
+        amount = 1,
+        name = "hairyclubnub-seed",
+        type = "item"
+      }
+    },
+    subgroup = "agriculture-processes",
+    type = "recipe"
+  }
+}
+data.raw.recipe["scrap-recycling"].results={{amount=1,name="scrap1",type="item"}}
+data.raw.recipe["scrap-recycling"].allow_productivity = false--废料回收
+

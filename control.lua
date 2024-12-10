@@ -1,4 +1,8 @@
 local e = defines.events
+local function cal_distance(planet)
+    local position=planet.prototype.position
+    return position.x*position.x+position.y*position.y
+end
 local function load_storage_data()
     if not storage["delete_platform"] then
         storage["delete_platform"]={}
@@ -10,28 +14,38 @@ local function load_storage_data()
         if not game.planets["mothership"].surface then
             local force =game.forces.player
             force.unlock_space_platforms()
-            local platform=force.create_space_platform{name="home",planet="mothership",starter_pack="mothership-pack"} 
+            local platform=force.create_space_platform{name="home",planet="sol",starter_pack="mothership-pack"}
             platform.apply_starter_pack()
             game.planets["mothership"].associate_surface(platform.surface)
         end
         storage["platform"]=game.planets["mothership"].surface.platform
     end
-    local planets={}
-    local random_packs={"1","2","3","4",'5',"6","7","8","9"}
-    local random_pack_count = #random_packs
+    if not game.planets.sol.surface then
+        game.forces.player.unlock_space_location("sol")
+        local sol_surface=game.planets.sol.create_surface()
+        game.forces.player.chart(sol_surface,{{x = -200, y = -200}, {x = 200, y = 200}})
+        sol_surface.create_entity{name="fulgoran-ruin-attractor",position={-3,-3},force="neutral"}--雷神引雷塔
+        sol_surface.create_entity{name="biter-spawner",position={0,0},force="enemy"}
+        game.forces.enemy.set_evolution_factor(1,sol_surface)
+    end
+    local planets={}--按距离排序
     for name,planet in pairs(game.planets) do
-        if name~="nauvis" and name~="mothership" then
-            table.insert(planets,name)
-            if random_pack_count>0 then
-                random_pack_count=random_pack_count-1
-            else table.insert(random_packs,"normal")
+        if name~="nauvis" and name~="mothership" and name~="sol" then
+            local inserted=false
+            local distance=cal_distance(planet)
+            for i =  1,#planets,1 do
+                if cal_distance(game.planets[planets[i]])>=distance then
+                    table.insert(planets,i,name)
+                    inserted=true
+                    break
+                end
             end
+            if not inserted then table.insert(planets,name) end
         end
     end
     storage["planets"]=planets
-    storage["random_pack"]=random_packs
-    game.forces.player.unlock_space_location("asteroid-belt-inner")
-    
+    if not storage["first-join"] then storage["first-join"]=true end
+    for i,name in pairs(planets) do log(name.." "..cal_distance(game.planets[name])) end
 end
 script.on_init(function()
     if game.tick > 0 then
@@ -63,11 +77,16 @@ end)
 script.on_event(e.on_player_created, function(event)
     local player = game.get_player(event.player_index) --[[@as LuaPlayer]]
     
-    player.insert({name="asteroid-collector",count=4})
-    player.insert({name="solar-panel",count=4})
-    player.insert({name="space-platform-foundation",count=100})
+    if storage["first-join"] then
+        player.insert({name="asteroid-collector",count=4})
+        player.insert({name="solar-panel",count=4})
+        player.insert({name="space-platform-foundation",count=100})
+        storage["first-join"]=false
+    else
+        player.insert({name="space-platform-foundation",count=100})
+    end
     if storage["platform"] then
-        player.teleport({5,5},storage["platform"].surface)
+        player.teleport(storage["platform"].surface.find_non_colliding_position("character",{0,0},6,0.1),storage["platform"].surface)
         local nauvis = game.get_surface("nauvis") --[[@as LuaSurface]]
         nauvis.clear()
     end
@@ -82,7 +101,13 @@ script.on_event(e.on_player_respawned, function(event)
     end
 end)
 
-
+local support_planet={
+    vulcanus=true,
+    nauvisorbit=true,
+    gleba=true,
+    fulgora=true,
+    aquilo=true
+}
 script.on_event(e.on_space_platform_changed_state,function(event)
     local platform=event.platform
     -- game.print(platform.name)
@@ -103,25 +128,17 @@ script.on_event(e.on_space_platform_changed_state,function(event)
                     local target_planet=game.planets[planets[storage["planet_index"]]]
                     platform.force.unlock_space_location(target_planet.name)
 
-                    local random_index
-                    local starter_pack_name
-                    if target_planet.name=="vulcanus" then
-                        random_index=5--铸造厂
-                        starter_pack_name="6-pack"
-                    elseif target_planet.name=="fulgora" then
-                        random_index=9--雷星
-                        starter_pack_name="9-pack"
-                    else
-                        random_index=event.tick%(#storage["random_pack"])+1--random
-                        starter_pack_name=storage["random_pack"][random_index].."-pack"
-                    end
                     
-                    table.remove(storage["random_pack"],random_index)
-                    local target_platform=platform.force.create_space_platform{name=target_planet.name,planet="nauvis",starter_pack=starter_pack_name}
+                    local starter_pack_name=target_planet.name.."-pack"
+                    if not support_planet[target_planet.name]  then
+                        starter_pack_name="normal-pack"
+                    end
+
+                    local target_platform=platform.force.create_space_platform{name=target_planet.name,planet="sol",starter_pack=starter_pack_name}
                     target_platform.apply_starter_pack()
                     target_planet.associate_surface(target_platform.surface)
                     target_planet.surface.always_day=true
-                    if starter_pack_name.name=="6-pack" then
+                    if starter_pack_name.name=="nauvisorbit-pack" then
                         local crash_ship=target_planet.surface.find_entity("crash-site-spaceship",{0,0})
                         if crash_ship then
                             crash_ship.get_inventory().insert({name="thruster",count=1,quality="rare"})
@@ -134,15 +151,14 @@ script.on_event(e.on_space_platform_changed_state,function(event)
                 end
                 platform.destroy(1)
                 return
-            else i=i+1
             end
         end 
     end
 end)
 
 script.on_event(e.on_lua_shortcut,function (event)
+    local player=game.players[event.player_index]
     if event.prototype_name=="launch-rocket" then
-        local player=game.players[event.player_index]
         if not player.force.technologies["rocket-silo"].researched then
             return
         end
@@ -182,6 +198,10 @@ script.on_event(e.on_lua_shortcut,function (event)
         starter_pack_dropdown.items = { "[item=mothership-pack]", "[item=space-platform-starter-pack]"}
         starter_pack_dropdown.selected_index=1
         launch_flow.add{type="button",caption={"description.create-platform"},style="confirm_button_without_tooltip",name="create_platform_button"}
+    elseif event.prototype_name=="respawn" then
+        if player.character and player.controller_type==defines.controllers.character then
+            player.character.die(player.force, player.character)
+        end
     end
 end)
 script.on_event(e.on_gui_click,function (event)
@@ -197,10 +217,27 @@ script.on_event(e.on_gui_click,function (event)
 end)
 script.on_event("leave_hub",function(event)
     local player=game.players[event.player_index]
-    if not player.character then
+    if player.controller_type==defines.controllers.remote and
+       player.physical_controller_type==defines.controllers.character and
+       player.physical_position.x==0 and
+       player.physical_position.y==0
+       then
         player.leave_space_platform()
+        player.set_controller{type=player.physical_controller_type,character=player.character}
         player.teleport(player.physical_surface.find_non_colliding_position("character",{0,0},6,0.1))
-        player.create_character()
-        player.set_controller{type=defines.controllers.character}
+    end
+end)
+
+script.on_event(e.on_chunk_charted,function (event)
+    local surface=game.surfaces[event.surface_index]
+    if surface.name=="sol" then
+        local position=event.position
+        if position.x<=5 and position.x>=-5 and position.y<=5 and position.y>=-5 then
+            local tile={
+                position = position,
+                name = "foundation"
+            }
+            surface.set_tiles({tile})
+        end
     end
 end)

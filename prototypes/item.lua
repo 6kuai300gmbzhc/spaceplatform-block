@@ -221,69 +221,31 @@ data:extend({
     order="z-z-z",
     }
 })
+local sol_silo=table.deepcopy(data.raw.item["rocket-silo"])
+sol_silo.name="sol-rocket-silo"
+sol_silo.place_result="sol-rocket-silo"
+sol_silo.icon="__spaceplatform-block__/graphics/icons/sol-rocket-silo.png"
+sol_silo.localised_description={"description.sol-rocket-silo"}
+data:extend{sol_silo}
 data.raw.item["iron-bacteria"].spoil_result="oil-bacteria"
 data.raw.item["copper-bacteria"].spoil_result="oil-bacteria"
 data.raw.item["rocket-silo"].weight=1000000
--- local tiles=mothership_pack.tiles
--- for _,tile in pairs(tiles) do
---   tile.tile="overgrowth-yumako-soil"
--- end
--- table.insert(tiles,{
---   position = {
---     5,
---     6
---   },
---   tile = "space-platform-foundation"
--- })
--- mothership_pack.tiles=tiles
--- local pack_pattern={--启动包
---   create_electric_network = false,
---   drop_sound = {
---     filename = "__base__/sound/item/mechanical-large-inventory-move.ogg",
---     volume = 0.7
---   },
---   icon = "__space-age__/graphics/icons/space-platform-hub.png",
---   initial_items = {
---     {
---       amount = 10,
---       name = "space-platform-foundation",
---       type = "item"
---     }
---   },--没有hub就没有初始物品
---   inventory_move_sound = {
---     filename = "__base__/sound/item/mechanical-large-inventory-move.ogg",
---     volume = 0.7
---   },
---   name = "",
---   order = "z",
---   pick_sound = {
---     filename = "__base__/sound/item/mechanical-large-inventory-pickup.ogg",
---     volume = 0.8
---   },
---   stack_size = 1,
---   subgroup = "space-rocket",
---   surface = "space-platform",
---   trigger = {
---     {
---       action_delivery = {
---         source_effects = {
---           {
---             entity_name = "fish",
---             type = "create-entity"
---           }
---         },
---         type = "instant"
---       },
---       type = "direct"
---     }
---   },
---   type = "space-platform-starter-pack",
---   weight = 1000000,
---   hidden=false,
---   hidden_in_factoriopedia=false,
---   tiles={}
--- }
+data.raw.item["sol-rocket-silo"].weight=1000000
 data.raw["space-platform-starter-pack"]["space-platform-starter-pack"].icon="__spaceplatform-block__/graphics/icons/space-platform-hub.png"
+local planet_platform={
+  icon = "__space-age__/graphics/icons/space-platform-hub.png",
+  name = "planet-platform",
+  order = "a",
+  subgroup = "planets",
+  surface_properties = {
+    ["day-night-cycle"] = 0,
+    gravity = 0,
+    ["magnetic-field"] = 0,
+    pressure = 1
+  },
+  type = "surface"
+}
+data:extend{planet_platform}
 local pack_pattern=table.deepcopy(data.raw["space-platform-starter-pack"]["space-platform-starter-pack"])
 pack_pattern.create_electric_network = false
 pack_pattern.hidden=true
@@ -302,20 +264,8 @@ pack_pattern.trigger={
     type = "direct"
   }
 }
+pack_pattern.surface="planet-platform"
 
--- for i=-5,5 do
---   for j=-5,5 do
---     local tile=
---     {
---         position = {
---           i,
---           j
---         },
---         tile = "space-platform-foundation"
---     }
---     table.insert(pack_pattern.tiles,tile)
---   end
--- end-- -5~5填充地板
 --添加给平台准备的启动包
 local normal_pack = table.deepcopy(pack_pattern)
 normal_pack.name="normal-pack"
@@ -339,7 +289,7 @@ mothership_pack.trigger={
   }
 }
 local vulcanus_pack = table.deepcopy(pack_pattern)
-vulcanus_pack.name="5-pack"
+vulcanus_pack.name="vulcanus-pack"
 vulcanus_pack.trigger={
   { 
     action_delivery = {
@@ -355,7 +305,7 @@ vulcanus_pack.trigger={
   }
 }
 local nauvis_pack = table.deepcopy(pack_pattern)
-nauvis_pack.name="6-pack"
+nauvis_pack.name="nauvisorbit-pack"
 nauvis_pack.trigger={
   { 
     action_delivery = {
@@ -385,22 +335,7 @@ for i=-18,25 do
   end
 end
 local gleba_pack = table.deepcopy(pack_pattern)
-gleba_pack.name="7-pack"
-gleba_pack.trigger={
-  { 
-    action_delivery = {
-      source_effects = {
-        {
-          entity_name = "gleba-spawner",
-          type = "create-entity",
-          as_enemy = true
-        }
-      },
-      type = "instant"
-    },
-    type = "direct"
-  }
-}
+gleba_pack.name="gleba-pack"
 for i=-6,6 do
   for j=-6,6 do
     local tile=
@@ -421,24 +356,38 @@ for i=-6,6 do
   end
 end
 local aquilo_pack = table.deepcopy(pack_pattern)
-aquilo_pack.name="8-pack"
+aquilo_pack.name="aquilo-pack"
 
 aquilo_pack.trigger={
   { 
     action_delivery = {
-      source_effects = {
-        {
-          entity_name = "fusion-reactor",
-          type = "create-entity"
-        }
+      {
+        source_effects = {
+          {
+            entity_name = "fusion-reactor",
+            type = "create-entity",
+            offsets={{x=-2,y=-2}}
+          }
+        },
+        type = "instant"
       },
-      type = "instant"
+      {
+        source_effects = {
+          {
+            entity_name = "biter-spawner",
+            type = "create-entity",
+            offsets={{x=2,y=2}},
+            as_enemy=true
+          }
+        },
+        type = "instant"
+      }
     },
     type = "direct"
   }
 }
 local fulgora_pack = table.deepcopy(pack_pattern)
-fulgora_pack.name="9-pack"
+fulgora_pack.name="fulgora-pack"
 
 fulgora_pack.trigger={
   { 
@@ -454,130 +403,6 @@ fulgora_pack.trigger={
     type = "direct"
   }
 }
-
-
-local random_pack1 = table.deepcopy(pack_pattern)
-random_pack1.name="1-pack"
-random_pack1.trigger={
-  { 
-    action_delivery = {
-      source_effects = {
-        {
-          entity_name = "biter-spawner",
-          type = "create-entity",
-          as_enemy = true
-        }
-      },
-      type = "instant"
-    },
-    type = "direct"
-  }
-}
-local random_pack2 = table.deepcopy(pack_pattern)
-random_pack2.name="2-pack"
-random_pack2.trigger={
-  { 
-    action_delivery = {
-      source_effects = {
-        {
-          entity_name = "fulgoran-ruin-attractor",
-          type = "create-entity"
-        }
-      },
-      type = "instant"
-    },
-    type = "direct"
-  }
-}
-local random_pack3 = table.deepcopy(pack_pattern)
-random_pack3.name="3-pack"
-random_pack3.trigger={
-  { 
-    action_delivery = {
-      {
-        source_effects = {
-          {
-            entity_name = "big-stomper-shell",
-            type = "create-entity"
-          },
-          {
-            entity_name = "big-stomper-pentapod",
-            type = "create-entity",
-            repeat_count=3,
-            as_enemy=true
-          }
-        },
-        type = "instant"
-      }
-    },
-    type = "direct"
-  }
-}
-random_pack3.tiles={}
-for i=-10,10 do
-  for j=-10,10 do
-    local tile=
-    {
-        position = {
-          i,
-          j
-        },
-        tile = "space-platform-foundation"
-    }
-    table.insert(random_pack3.tiles,tile)
-  end
-end
-data.raw["simple-entity"]["big-stomper-shell"].minable.results={
-  {
-    amount_max = 10,
-    amount_min = 1,
-    name = "stone",
-    type = "item"
-  },
-  {
-    amount_max = 10,
-    amount_min = 1,
-    name = "spoilage",
-    type = "item"
-  },
-  {
-    amount_max = 2,
-    amount_min = 1,
-    name = "raw-fish",
-    type = "item"
-  }
-}
-local random_pack4 = table.deepcopy(pack_pattern)
-random_pack4.name="4-pack"
-random_pack4.trigger={
-  { 
-    action_delivery = {
-      source_effects = {
-        {
-          entity_name = "medium-demolisher",
-          type = "create-entity",
-          as_enemy=true
-        }
-      },
-      type = "instant"
-    },
-    type = "direct"
-  }
-}
-random_pack4.tiles={}
-for i=-10,10 do
-  for j=-10,10 do
-    local tile=
-    {
-        position = {
-          i,
-          j
-        },
-        tile = "space-platform-foundation"
-    }
-    table.insert(random_pack4.tiles,tile)
-  end
-end
 data:extend{
   mothership_pack,
   vulcanus_pack,
@@ -585,9 +410,52 @@ data:extend{
   gleba_pack,
   aquilo_pack,
   fulgora_pack,
-  random_pack1,
-  random_pack2,
-  random_pack3,
-  random_pack4,
   normal_pack
 }
+--太空种子
+local cuttlepop_seed=table.deepcopy(data.raw.item["yumako-seed"])
+cuttlepop_seed.name="cuttlepop-seed"
+cuttlepop_seed.localised_description = {
+  "item-description.cuttlepop-seed"
+}
+cuttlepop_seed.localised_name = {"item-name.cuttlepop-seed"}
+cuttlepop_seed.order="a-c"
+cuttlepop_seed.place_result="space-cuttlepop"
+cuttlepop_seed.plant_result="space-cuttlepop"
+cuttlepop_seed.icon="__spaceplatform-block__/graphics/icons/cuttlepop-seed.png"
+cuttlepop_seed.pictures = {
+  {
+    filename = "__spaceplatform-block__/graphics/icons/cuttlepop-seed.png",
+    mipmap_count = 4,
+    scale = 0.5,
+    size = 64
+  }
+}
+local hairyclubnub_seed=table.deepcopy(data.raw.item["yumako-seed"])
+hairyclubnub_seed.name="hairyclubnub-seed"
+hairyclubnub_seed.localised_description = {
+  "item-description.hairyclubnub-seed"
+}
+hairyclubnub_seed.localised_name = {"item-name.hairyclubnub-seed"}
+hairyclubnub_seed.order="a-c"
+hairyclubnub_seed.place_result="space-hairyclubnub"
+hairyclubnub_seed.plant_result="space-hairyclubnub"
+hairyclubnub_seed.icon="__spaceplatform-block__/graphics/icons/hairyclubnub-seed.png"
+hairyclubnub_seed.pictures = {
+  {
+    filename = "__spaceplatform-block__/graphics/icons/hairyclubnub-seed.png",
+    mipmap_count = 4,
+    scale = 0.5,
+    size = 64
+  }
+}
+data:extend{
+  cuttlepop_seed,hairyclubnub_seed
+}
+local scrap1 =table.deepcopy(data.raw.item.scrap)
+scrap1.spoil_result="scrap"
+scrap1.spoil_ticks=300
+scrap1.name="scrap1"
+scrap1.hidden=true
+scrap1.hidden_in_factoriopedia=true
+data:extend{scrap1}

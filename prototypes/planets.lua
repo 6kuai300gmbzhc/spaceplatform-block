@@ -34,7 +34,7 @@ mothership.surface_properties =
 {
   ["day-night-cycle"] = 0,
   ["solar-power"] = 600,
-  pressure = 0,
+  pressure = 1,
   gravity = 0
 }
 mothership.solar_power_in_space=600
@@ -75,7 +75,10 @@ data:extend({
           {icon = data.raw.planet.mothership.icon, icon_size = data.raw.planet.mothership.icon_size or 64, scale = 0.333 * (64 / (data.raw.planet.mothership.icon_size or 64)), shift = {-6, -6}},
           {icon = data.raw.planet.nauvisorbit.icon, icon_size = data.raw.planet.nauvisorbit.icon_size or 64, scale = 0.333 * (64 / (data.raw.planet.nauvisorbit.icon_size or 64)), shift = {6, 6}}
         }
-    },
+    }
+})
+if mods["real-starry-universe"]then
+  data:extend{
     {
       type = "space-connection",
       name = "pluto-solar-system-edge",
@@ -91,9 +94,46 @@ data:extend({
         {icon = data.raw.planet.pluto.icon, icon_size = data.raw.planet.pluto.icon_size or 64, scale = 0.333 * (64 / (data.raw.planet.pluto.icon_size or 64)), shift = {-6, -6}},
         {icon = data.raw["space-location"]["solar-system-edge"].icon, icon_size = data.raw["space-location"]["solar-system-edge"].icon_size or 64, scale = 0.333 * (64 / (data.raw["space-location"]["solar-system-edge"].icon_size or 64)), shift = {6, 6}}
       }
+    }
   }
-})
-data.raw["space-connection"]["aquilo-solar-system-edge"]=nil
+  data.raw["space-location"]["solar-system-edge"].distance=130
+  data.raw["space-location"]["solar-system-edge"].orientation = 290 / 360
+  data.raw["space-location"]["shattered-planet"].distance=140
+  data.raw["space-location"]["shattered-planet"].orientation = 290 / 360
+  data.raw["space-connection"]["aquilo-solar-system-edge"]=nil
+  data.raw["space-location"].sol=nil
+  data.raw["space-connection"]["sol-mercury"]=nil
+end
+local sol=table.deepcopy(data.raw.planet.vulcanus)
+sol.name="sol"
+sol.icon = "__core__/graphics/icons/starmap-star.png"
+sol.icon_size = 512
+sol.gravity_pull = 21.7
+sol.distance = 0
+sol.orientation = 0 / 360
+sol.asteroid_spawn_definitions = mothership.asteroid_spawn_definitions
+sol.starmap_icon = "__core__/graphics/icons/starmap-star.png"
+sol.starmap_icon_size = 512
+sol.magnitude = 5
+sol.map_gen_settings={
+  autoplace_settings = {
+    tile = {
+      settings = {
+        lava = {},
+        ["lava-hot"] = {}
+      }
+    }
+  }
+}
+sol.always_day=true
+sol.surface_properties={
+  ["day-night-cycle"] = 0,
+  ["solar-power"] = 2000,
+  pressure = 0,
+  gravity = 100,
+  ["magnetic-field"] = 0
+}
+data:extend{sol}
 --航道交给新平台
 for _,connection in pairs(data.raw["space-connection"]) do
   if connection.from=="nauvis" then
@@ -103,7 +143,3 @@ for _,connection in pairs(data.raw["space-connection"]) do
     connection.to="nauvisorbit"
   end
 end
-data.raw["space-location"]["solar-system-edge"].distance=130
-data.raw["space-location"]["solar-system-edge"].orientation = 290 / 360
-data.raw["space-location"]["shattered-planet"].distance=140
-data.raw["space-location"]["shattered-planet"].orientation = 290 / 360

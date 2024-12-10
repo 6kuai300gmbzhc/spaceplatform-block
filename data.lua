@@ -19,5 +19,6 @@ require("prototypes/technology")
 require("prototypes/plant")
 require("prototypes/asteroid")
 require("prototypes/weapon")
+require("prototypes/silo")
 require("prototypes/shortcut")
 data.raw["rocket-silo"]["rocket-silo"].rocket_parts_required = 30

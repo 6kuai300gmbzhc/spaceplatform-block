@@ -1,3 +1,24 @@
+Version: 0.2.0
+Date: 2024-12-10
+  建议在新存档开始游戏
+  Strongly suggest to start a new game
+  Features:
+   - 添加了太阳！现在所有星球平台都在太阳上
+   - 给所有星球平台的气压设置为1，来阻止在上面放推进器
+   - 添加了可以在太空平台生长的两种树苗
+   - 添加了给太阳上使用的火箭发射井和对应的区段配方
+   - 真实太阳系改为可选依赖
+   - 现在将按距离来解锁星球，而不是随机解锁
+   - 添加了重生按钮
+   - 添加了出仓按钮，回车键出仓
+   -Added the sun! Now all planet platforms are on the sun
+   -Set the pressure of all planet platforms to 1 to prevent thrusters from being placed on them
+   -Added two types of seeds that can grow on space platforms
+   -Added rocket silo and corresponding rocket part recipe for use on the sun
+   -Real solar system mod changed to optional dependency
+   -Now planets will be unlocked based on distance, rather than random unlocking
+   -Added respawn button
+   -Added leave hub button press enter to leave the hub
 Version: 0.1.5
 Date: 2024-12-5
   Features:

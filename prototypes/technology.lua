@@ -15,20 +15,20 @@ utils.set_prerequisites("automation",{"electronics"})
 utils.set_prerequisites("space-science-pack", {})
 utils.set_prerequisites("electronics", {"space-science-pack"})
 utils.set_prerequisites("steam-power", {"space-science-pack"})
+utils.remove_recipes("steam-power",{"offshore-pump"})
 utils.set_prerequisites("logistic-system", {"logistic-robotics"})
 utils.add_recipes("steel-processing",{"space-platform-foundation"})
-utils.set_prerequisites("space-platform",{"rocket-silo"})
+data.raw.technology["space-platform"].enabled=false
+--utils.set_prerequisites("space-platform",{"rocket-silo"})
 utils.remove_recipes("space-platform",{"metallic-astroid-crushing","carbonic-astroid-crushing","oxide-astroid-crushing","crusher"})
--- utils.add_recipes("space-science-pack",{"metallic-astroid-crushing","carbonic-astroid-crushing","oxide-astroid-crushing"})
 data.raw["technology"]["rocket-silo"]["effects"]={{
     type = "unlock-space-location",
     space_location = "mothership",
     use_icon_overlay_constant = true
 }}
-utils.set_prerequisites("space-platform-thruster",{"space-platform"})
+utils.set_prerequisites("space-platform-thruster",{"rocket-silo"})
 utils.set_prerequisites("rocket-silo",{"processing-unit","electric-engine","low-density-structure"})
-utils.add_recipes("rocket-silo",{"space-platform-starter-pack","mothership_pack","rocket-silo"})
-utils.add_recipes("space-platform",{"space-platform-hub"})
+utils.add_recipes("rocket-silo",{"space-platform-starter-pack","mothership_pack","rocket-silo","space-platform-hub","cargo-bay"})
 utils.remove_recipes("space-platform-thruster",{"ice-melting"})
 data.raw.technology.landfill.enabled=false
 
@@ -137,7 +137,32 @@ utils.set_trigger("jellynut",{type = "craft-item", item = "jellynut-seed",count=
 utils.set_trigger("yumako",{type = "craft-item", item = "yumako-seed",count=1})
 utils.set_trigger("heating-tower",{type = "craft-item", item = "pentapod-egg",count=1})
 utils.add_recipes("bioflux",{"organic-solution-from-bioflux"})
-
+data:extend{
+    {
+        type = "technology",
+        name = "space-plant",
+        localised_description={"description.space-plant"},
+        icon = "__space-age__/graphics/technology/overgrowth-soil.png",
+        icon_size = 256,
+        essential = true,
+        effects = {},
+        prerequisites = {"agricultural-science-pack"},
+        unit = {
+            count = 1000,
+            ingredients = {
+                {"automation-science-pack", 1},
+                {"logistic-science-pack", 1},
+                {"chemical-science-pack", 1},
+                {"space-science-pack", 1},
+                {"agricultural-science-pack",1},
+                {"production-science-pack",1},
+                {"utility-science-pack",1}
+            },
+            time = 60
+        }
+    }
+}
+utils.add_recipes("space-plant",{"cuttlepop-seed","hairyclubnub-seed"})
 data.raw.technology["plastic-bar-productivity"].effects={
     {
         type = "change-recipe-productivity",
@@ -176,46 +201,11 @@ data.raw.technology.recycling.unit =
   },
   time = 15
 }
-data.raw.technology["scrap-recycling-productivity"].disable=false
+data.raw.technology["scrap-recycling-productivity"]=nil
 utils.remove_recipes("recycling",{"scrap-recycling"})
--- --回收产能
--- local scrap_4 = data.raw.technology["scrap-recycling-productivity"]
-
--- local scrap_3 = table.deepcopy(scrap_4)
--- scrap_3.max_level = nil
--- scrap_3.unit.count_formula = nil
-
--- local scrap_2 = table.deepcopy(scrap_3)
-
--- local scrap_1 = table.deepcopy(scrap_2)
--- scrap_1.upgrade = nil
-
--- scrap_1.name = scrap_1.name .. "-1"
--- scrap_2.name = scrap_2.name .. "-2"
--- scrap_3.name = scrap_3.name .. "-3"
-
--- scrap_1.unit.count = 100
--- scrap_2.unit.count = 250
--- scrap_3.unit.count = 500
-
--- scrap_1.prerequisites = {"recycling"}
--- scrap_2.prerequisites = {scrap_1.name}
--- scrap_3.prerequisites = {"production-science-pack", scrap_2.name}
-
--- scrap_4.unit.count_formula = "1.5^(L-3)*500"
-
--- utils.add_prerequisites("scrap-recycling-productivity", {scrap_3.name})
-
--- data:extend{scrap_1, scrap_2, scrap_3}
--- --四级回收
--- local tech = data.raw.technology["scrap-recycling-productivity"]
--- tech.name = tech.name .. "-4"
--- data.raw.technology["scrap-recycling-productivity"] = nil
--- data.raw.technology[tech.name] = tech
-
 --冰星科技
 utils.add_recipes("planet-discovery-aquilo",{"aquilo-asteroid-smelting-1","aquilo-asteroid-smelting-2","aquilo-asteroid-smelting-3"})
-data.raw.technology.foundation.enabled=false
+utils.add_recipes("quantum-processor",{"sol-rocket-silo"})
 --区段产能科技
 local rocket_final = table.deepcopy(data.raw.technology["rocket-part-productivity"])
 data.raw.technology["rocket-part-productivity"]=nil
@@ -237,32 +227,26 @@ rocket_1.prerequisites={"rocket-silo"}
 data.extend{rocket_1,rocket_2,rocket_final}
 
 --废料科技，指向物质合成
--- data:extend{{
---     type = "technology",
---     name = "scrap-recycling",
---     icons = util.technology_icon_constant_planet("__spaceplatform-block__/nauvis.png"),
---     icon_size = 256,
---     essential = true,
---     effects = {},
---     prerequisites = {"space-platform-thruster"},
---     unit = {
---         count = 1000,
---         ingredients = {
---             {"automation-science-pack", 1},
---             {"logistic-science-pack", 1},
---             {"chemical-science-pack", 1},
---             {"space-science-pack", 1}
---         },
---         time = 60
---     }
--- }}
+data:extend{{
+    type = "technology",
+    name = "scrap-recycling",
+    icon = "__spaceplatform-block__/graphics/icons/scrap-recycling.png",
+    icon_size = 384,
+    essential = false,
+    effects = {},
+    prerequisites = {"space-platform-thruster"},
+    research_trigger={type = "mine-entity", entity="fulgoran-ruin-attractor"}
+}}
+utils.add_recipes("scrap-recycling",{"scrap-recycling"})
 for _,planet in pairs(data.raw.planet)do--关闭科技发现星球
     if data.raw.technology["planet-discovery-"..planet.name]then
       utils.remove_space_location_to_technology("planet-discovery-"..planet.name,planet.name)
     end
 end
 --关闭真实太阳系的各种科技
-local PlanetTechnologies = {
+if mods["real-starry-universe"]then
+    local PlanetTechnologies = {
+    { "sol", "太阳", { "planet-discovery-sol", "space-platform-thruster" }, false },
     { "mercury", "水星", { "planet-discovery-venus", "space-platform-thruster" }, false },
     { "venus", "金星", { "planet-discovery-luna", "space-platform-thruster" }, false },
     { "earth", "地球", { "space-platform-thruster" }, false },
@@ -276,10 +260,11 @@ local PlanetTechnologies = {
     { "uranus", "天王星", { "planet-discovery-saturn", "space-platform-thruster" }, false },
     { "neptune", "海王星", { "planet-discovery-uranus", "space-platform-thruster" }, false },
     { "pluto", "冥王星", { "planet-discovery-neptune", "space-platform-thruster" }, false }
-}
-for i, tech in ipairs(PlanetTechnologies) do
-    local planet_name = tech[1]
-    data.raw.technology["planet-discovery-" .. planet_name].enabled=false
+    }
+    for i, tech in ipairs(PlanetTechnologies) do
+        local planet_name = tech[1]
+        data.raw.technology["planet-discovery-" .. planet_name].enabled=false
+    end
 end
 
 --加白瓶
