@@ -1,4 +1,4 @@
-data:extend{
+data:extend {
     {
         type = "shortcut",
         name = "launch-rocket",

@@ -1,3 +1,81 @@
+Version: 0.3.9
+Date: 2024-12-28
+  Features:
+    - 完成了飞到死模式
+    - 给飞到死模式加了一个反向引擎！可以起到减速的作用
+Version: 0.3.8
+Date: 2024-12-28
+  Features:
+    - 增加困难模式特斯拉电塔的强度
+    - 让他的攻击范围在mod设置里可调
+    - 困难模式，除了太阳，其他星球星岩密度乘以五倍！！（设置可调）
+Version: 0.3.7
+Date: 2024-12-28
+  Features:
+    - 减少子弹消耗，增加星块的数量
+    - 困难模式给子弹和炮塔加伤害，调整到五级科研的程度
+Version: 0.3.6
+Date: 2024-12-28
+  Features:
+    - 修复往太阳上扔太多垃圾会卡死的bug
+Version: 0.3.5
+Date: 2024-12-28
+  Features:
+    - 修复可以白嫖0耗电电塔的bug
+    - 困难模式下降开局陨石密度，让电塔攻速翻倍
+    - 陨石参数放到mod设置里
+Version: 0.3.3
+Date: 2024-12-28
+  Features:
+    - 调整星岩密度和科技前置条件，就是给困难模式调平衡性
+    - 增加硫细菌到硫酸的配方
+    - 发现了一个物流接驳站不能和枢纽放一起的bug，所以把接驳站配方移除了
+    - 给困难模式的开局增加了一个0耗电的电塔
+Version: 0.3.2
+Date: 2024-12-28
+  Features:
+    - 让困难模式开局解锁贫铀弹夹和特斯拉弹药配方
+Version: 0.3.1
+Date: 2024-12-28
+  Features:
+    - 修复了在旧存档中，玩家复活时如果把地图中心的平台拆了会闪退的bug
+Version: 0.3.0
+Date: 2024-12-28
+  Features:
+    - 添加了切换游戏模式的mod设置
+    - 添加了困难模式，让陨石难度超级加倍，困难模式开局送一个特斯拉塔
+    - 现在每个玩家开局带一把电磁枪和25弹药，伤害超级加倍
+    - 陨石会把平台创烂，然后需要重新发射探空火箭包解锁星球
+    - 把母舰创烂会再送一艘
+    - 母舰可以放引擎然后飞走了！可喜可贺
+    - 现在太空平台在新建的时候自带一个枢纽了
+Version: 0.2.7
+Date: 2024-12-16
+  Features:
+    - 调整冰星科技的要求
+Version: 0.2.6
+Date: 2024-12-12
+  Features:
+    - 调整农业塔和生物室的配方，去掉填海料
+Version: 0.2.4
+Date: 2024-12-12
+  Features:
+    - 在版本更新时手动调整平台气压和重力
+Version: 0.2.3
+Date: 2024-12-12
+  Features:
+    - 修复不能放枢纽和发射井的bug
+    - 调整了一下太阳的属性
+Version: 0.2.2
+Date: 2024-12-12
+  Features:
+    - 真实太阳系依赖版本改为1.1.7，可能会在以后兼容maraxsis吧
+    - The  real-starry-universe dependency version has been fixed to 1.1.7
+Version: 0.2.1
+Date: 2024-12-11
+  Features:
+    - 修复了穿机械甲不能出仓的问题
+    - fix a bug that can't leave the hub while equipped mech armor
 Version: 0.2.0
 Date: 2024-12-10
   建议在新存档开始游戏
