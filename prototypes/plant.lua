@@ -3,6 +3,8 @@
 --     local tile_restriction=data.raw["plant"][plant].autoplace.tile_restriction
 --     table.insert(tile_restriction,"space-platform-foundation")
 -- end
+local tree_retrict=data.raw.plant["tree-plant"].autoplace.tile_restriction
+table.insert(tree_retrict,"space-platform-foundation")
 local space_hairyclubnub = table.deepcopy(data.raw.plant["jellystem"]) --太空果冻果
 space_hairyclubnub.name = "space-hairyclubnub"
 space_hairyclubnub.subgroup = "trees"

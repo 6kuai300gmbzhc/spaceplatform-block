@@ -1,5 +1,6 @@
 local utils = require "utils"
 local asteroid_util = require("__space-age__.prototypes.planet.asteroid-spawn-definitions")
+require("prototypes.final-fix-recipe")
 if settings.startup["gamemode"].value == "fly-to-die" then
   require("fly-to-die.main")
 end

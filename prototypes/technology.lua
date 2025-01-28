@@ -1,4 +1,7 @@
 local utils = require("utils")
+--禁用用不到的科技,建筑机器人挪到太阳之后
+data.raw.technology["rail-support-foundations"].enabled=false
+data.raw.technology["cliff-explosives"].enabled=false
 --钢
 utils.remove_packs("steel-processing", { "automation-science-pack" })
 utils.set_prerequisites("steel-processing", { "space-science-pack" })
@@ -9,12 +12,22 @@ utils.set_prerequisites("solar-energy", { "steel-processing", "automation-scienc
 --组装机
 utils.remove_packs("automation", { "automation-science-pack" })
 utils.set_prerequisites("automation", { "electronics" })
-
-
+--锅炉
+-- utils.remove_recipes("steam-power",{"boiler"})
+utils.add_recipes("steam-power",{"asteroid-boiler"})
+utils.add_recipes("steam-power",{"steam-from-asteroids"})
+utils.remove_recipes("steam-power", { "offshore-pump" })
+utils.add_recipes("fluid-handling",{"cold-steam-from-ice","water-from-ice","cold-steam-from-water","steam-heating"})
 --各种调依赖
 utils.set_prerequisites("space-science-pack", {})
 utils.set_prerequisites("electronics", { "space-science-pack" })
 utils.set_prerequisites("steam-power", { "space-science-pack" })
+table.insert(data.raw.technology["space-science-pack"],
+{
+  modifier = true,
+  type = "create-ghost-on-entity-death"
+})--自动生成虚影
+
 utils.set_prerequisites("gun-turret", { "space-science-pack" })
 utils.set_unit("gun-turret", {
   count = 10,
@@ -28,7 +41,7 @@ utils.set_unit("gun-turret", {
 }
 )
 
-utils.remove_recipes("steam-power", { "offshore-pump" })
+
 utils.set_prerequisites("logistic-system", { "logistic-robotics" })
 utils.add_recipes("steel-processing", { "space-platform-foundation" })
 data.raw.technology["space-platform"].enabled = false
@@ -236,7 +249,7 @@ data.raw.technology.recycling.unit =
   time = 15
 }
 data.raw.technology["scrap-recycling-productivity"] = nil
-data.raw.technology["rail-support-foundations"].enabled=false
+data.raw.technology["rail-support-foundations"].enabled = false
 utils.remove_recipes("recycling", { "scrap-recycling" })
 --冰星科技
 utils.set_trigger("lithium-processing", { type = "craft-fluid", fluid = "lithium-brine", count = 200 })
@@ -268,19 +281,81 @@ data.extend { rocket_1, rocket_2, rocket_final }
 data:extend { {
   type = "technology",
   name = "scrap-recycling",
-  icon = "__spaceplatform-block__/graphics/icons/scrap-recycling.png",
+  icon = "__core__/graphics/icons/starmap-star.png",
   icon_size = 384,
   essential = false,
   effects = {},
-  prerequisites = { "space-platform-thruster" },
+  prerequisites = { "quantum-processor" },
   research_trigger = { type = "mine-entity", entity = "fulgoran-ruin-attractor" }
 } }
+--建筑机器人在太阳之后，只有太阳可以用建筑机器人
+utils.set_prerequisites("construction-robotics",{"robotics","scrap-recycling"})
+data.raw.technology["construction-robotics"].effects={--去掉虚影
+  {
+    recipe = "roboport",
+    type = "unlock-recipe"
+  },
+  {
+    recipe = "passive-provider-chest",
+    type = "unlock-recipe"
+  },
+  {
+    recipe = "storage-chest",
+    type = "unlock-recipe"
+  },
+  {
+    recipe = "construction-robot",
+    type = "unlock-recipe"
+  }
+}
+
+
 utils.add_recipes("scrap-recycling", { "scrap-recycling" })
 for _, planet in pairs(data.raw.planet) do --关闭科技发现星球
   if data.raw.technology["planet-discovery-" .. planet.name] then
     utils.remove_space_location_to_technology("planet-discovery-" .. planet.name, planet.name)
   end
 end
+
+
+
+--自动重炮
+data:extend {
+  {
+    type = "technology",
+    name = "automated-artillery-turret",
+    icon = "__spaceplatform-block__/graphics/icons/automated-artillery-turret-technology.png",
+    icon_size = 256,
+    essential = false,
+    prerequisites = { "quantum-processor","artillery" },
+    unit ={
+      count = 2000,
+      ingredients =
+      {
+        {"automation-science-pack",1},
+        {"logistic-science-pack",1},
+        {"chemical-science-pack",1},
+        {"military-science-pack",1},
+        {"production-science-pack",1},
+        {"utility-science-pack",1},
+        {"space-science-pack",1},
+        {"metallurgic-science-pack",1},
+        {"electromagnetic-science-pack",1},
+        {"agricultural-science-pack",1},
+        {"cryogenic-science-pack",1}
+      },
+      time = 60
+    },
+    effects={
+      {
+        recipe="automated-artillery-turret",
+        type = "unlock-recipe"
+      }
+    }
+  }
+}
+
+
 --关闭真实太阳系的各种科技
 local DLCplanets = { "nauvis", "vulcanus", "gleba", "aquilo", "fulgora" }
 for name, planet in pairs(data.raw.planet) do

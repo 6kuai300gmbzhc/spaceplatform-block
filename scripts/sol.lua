@@ -1,7 +1,7 @@
 local e = defines.events
 local self_burn=function(event)
-    local surface = game.surfaces[event.surface_index]
     if event.effect_id == "sol-fire-sticker" then
+        local surface = game.surfaces[event.surface_index]
         for name, player in pairs(game.players) do
             local character = player.character
             if character and player.physical_surface.name == "sol" then
@@ -12,7 +12,7 @@ local self_burn=function(event)
                     cause = game.forces[3]
                 }
             end
-        end
+        end   
     end
 end
 local sol={}

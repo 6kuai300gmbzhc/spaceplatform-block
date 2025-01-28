@@ -275,9 +275,26 @@ end
 
 --@param vector list
 function utils.revers_vector(vector)
-    for i,value in pairs(vector) do
-        vector[i]=-value
+    for i, value in pairs(vector) do
+        vector[i] = -value
     end
     return vector
 end
+
+--@param name string
+function utils.add_recipe_item_group(name)
+    data:extend({
+        {
+            type = "recipe-category",
+            name = name
+        },
+        {
+            type = "item-subgroup",
+            name = name,
+            group = "intermediate-products",
+            order = "z-" .. name
+        }
+    })
+end
+
 return utils

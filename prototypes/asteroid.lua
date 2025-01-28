@@ -1,6 +1,35 @@
 local utils = require("utils")
-data:extend {
-  {   --有机质星岩
+-- data.raw["utility-constants"].default.asteroid_position_offset_to_speed_coefficient=0
+-- data.raw["utility-constants"].default.asteroid_fading_range=5
+-- data.raw["utility-constants"].default.asteroid_spawning_with_random_orientation_max_speed=0
+for _, asteroid in pairs(data.raw.asteroid) do --调节抗性
+  if asteroid.resistances then
+    for _, resistance in pairs(asteroid.resistances) do
+      if resistance.type == "fire" then
+        resistance.percent = 80
+      elseif resistance.type == "laser" then
+        resistance.percent = resistance.percent * 3 / 4
+      elseif resistance.type == "electric" then
+        if asteroid.name:byte(1) == 115 then     --小星岩
+          resistance.percent = 15
+        elseif asteroid.name:byte(1) == 109 then --中星岩
+          resistance.percent = 35
+        elseif asteroid.name:byte(1) == 98 then  --大星岩
+          resistance.percent = 70
+        else
+          resistance.percent = 90
+        end
+      end
+    end
+  end
+end
+
+
+
+
+
+data:extend { --这些都是星块，没有抗性
+  {           --有机质星岩
     dying_trigger_effect = {
       {
         entity_name = "small-strafer-pentapod-leg-die",
@@ -98,7 +127,7 @@ data:extend {
       }
     }
   },
-  {   --冰星星岩
+  { --冰星星岩
     dying_trigger_effect = {
       {
         entity_name = "metallic-asteroid-explosion-1",
@@ -196,7 +225,7 @@ data:extend {
       }
     }
   },
-  {   --钨矿星岩
+  { --钨矿星岩
     dying_trigger_effect = {
       {
         entity_name = "promethium-asteroid-explosion-1",
@@ -294,7 +323,7 @@ data:extend {
       }
     }
   },
-  {   -- 铀矿星岩
+  { -- 铀矿星岩
     dying_trigger_effect = {
       {
         entity_name = "promethium-asteroid-explosion-1",
@@ -392,7 +421,7 @@ data:extend {
       }
     }
   },
-  {   -- 钬矿星岩
+  { -- 钬矿星岩
     dying_trigger_effect = {
       {
         entity_name = "promethium-asteroid-explosion-1",
@@ -493,7 +522,7 @@ data:extend {
 }
 
 local aquilo_asteroid_spawn = {
-  repeat_count = 10,
+  repeat_count = 2,
   asteroid_name = "aquilo-asteroid-chunk",
   offset_deviation = {
     {
@@ -544,7 +573,7 @@ local uranium_asteroid_spawn = {
   probability = 0.25
 }
 local organic_asteroid_spawn = {
-  repeat_count = 2,
+  repeat_count = 1,
   asteroid_name = "organic-asteroid-chunk",
   offset_deviation = {
     {
@@ -571,10 +600,10 @@ local organic_asteroid_spawn = {
     }
   },
   type = "create-asteroid-chunk",
-  probability = 0.5
+  probability = 1
 }
 local tungsten_asteroid_spawn = {
-  repeat_count = 5,
+  repeat_count = 1,
   asteroid_name = "tungsten-asteroid-chunk",
   offset_deviation = {
     {
@@ -593,7 +622,7 @@ local tungsten_asteroid_spawn = {
     }
   },
   type = "create-asteroid-chunk",
-  probability = 0.2
+  probability = 1
 }
 local holmium_asteroid_spawn = table.deepcopy(tungsten_asteroid_spawn)
 holmium_asteroid_spawn.asteroid_name = "holmium-asteroid-chunk"
@@ -602,54 +631,38 @@ table.insert(data.raw.asteroid["medium-metallic-asteroid"].dying_trigger_effect,
 table.insert(data.raw.asteroid["big-carbonic-asteroid"].dying_trigger_effect, organic_asteroid_spawn)
 table.insert(data.raw.asteroid["big-metallic-asteroid"].dying_trigger_effect, tungsten_asteroid_spawn)
 table.insert(data.raw.asteroid["big-metallic-asteroid"].dying_trigger_effect, holmium_asteroid_spawn)
-table.insert(data.raw.asteroid["small-metallic-asteroid"].dying_trigger_effect, {
-  asteroid_name = "metallic-asteroid-chunk",
-  offset_deviation = {
-    {
-      0.25,
-      -0.25
-    },
-    {
-      0.25,
-      -0.25
-    }
-  },
-  offsets = {
-    {
-      0.125,
-      0.0625
-    },
-    {
-      -0.125,
-      0.0625
-    }
-  },
-  type = "create-asteroid-chunk"
-}) --金属星岩出的量翻倍
 
 
 
-for _, asteroid in pairs(data.raw.asteroid) do --调节抗性
-  if asteroid.resistances then
-    for _, resistance in pairs(asteroid.resistances) do
-      if resistance.type == "fire" then
-        resistance.percent = 80
-      elseif resistance.type == "laser" then
-        resistance.percent = resistance.percent * 3 / 4
-      elseif resistance.type == "electric" then
-        if asteroid.name:byte(1) == 115 then   --小星岩
-          resistance.percent = 15
-        elseif asteroid.name:byte(1) == 109 then --中星岩
-          resistance.percent = 35
-        elseif asteroid.name:byte(1) == 98 then --大星岩
-          resistance.percent = 70
-        else
-          resistance.percent = 90
-        end
-      end
-    end
-  end
+for i,type in pairs({"metallic","carbonic","oxide"}) do--三个人造星岩
+  local asteroid_target = table.deepcopy(data.raw.asteroid["big-"..type.."-asteroid"])
+  asteroid_target.name = type.."-asteroid-target"
+  asteroid_target.type = "simple-entity-with-force"
+  asteroid_target.pictures = nil
+  asteroid_target.pictures = nil
+  asteroid_target.dying_trigger_effect=nil
+  asteroid_target.animations = {
+      {
+        animation_speed = 0.2,
+        filename = "__spaceplatform-block__/graphics/asteroid/target/target-"..type..".png",
+        frame_count = 60,
+        height = 340,
+        priority = "high",
+        scale = 0.5,
+        shift = { 0, 0 },
+        width = 340,
+        line_length=10,
+        surface="space"
+      }
+  }
+  -- asteroid_target.is_military_target = false --低优先级
+  data:extend {
+    asteroid_target
+  }
 end
+
+
+
 
 --让所有航道上的星岩不会随飞船停止而减少生成
 for name, connection in pairs(data.raw["space-connection"]) do

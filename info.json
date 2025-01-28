@@ -1,11 +1,11 @@
 {
   "name": "spaceplatform-block",
-  "version": "0.3.9",
+  "version": "0.4.0",
   "title": "spaceplatform-block（太空空岛）",
   "author": "dazhaxie",
   "contact": "486656944@qq.com",
   "homepage": "",
   "factorio_version": "2.0",
-  "dependencies": ["space-age","? real-starry-universe=1.1.7"],
+  "dependencies": ["space-age","? real-starry-universe=1.1.7","leave-hub"],
   "description": "在太空平台上开始游戏！发射独特的启动包来解锁位于其他星球的平台，捕获多种新添加的星岩来发展下去"
 }

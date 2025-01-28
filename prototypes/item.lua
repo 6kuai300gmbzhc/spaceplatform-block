@@ -178,7 +178,19 @@ data:extend({
         },
         type = "direct"
       }
-    }
+    },
+    inventory_move_sound = {
+      filename = "__base__/sound/item/resource-inventory-move.ogg",
+      volume = 0.8
+    },
+    pick_sound = {
+      filename = "__base__/sound/item/resource-inventory-pickup.ogg",
+      volume = 0.6
+    },
+    drop_sound = {
+      filename = "__base__/sound/item/resource-inventory-move.ogg",
+      volume = 0.8
+    },
   },
   { --铀矿星岩
     type = "item",
@@ -189,6 +201,18 @@ data:extend({
     default_import_location = "nauvisorbit",
     weight = 100 * kg,
     order = "z-z-z",
+    inventory_move_sound = {
+      filename = "__base__/sound/item/resource-inventory-move.ogg",
+      volume = 0.8
+    },
+    pick_sound = {
+      filename = "__base__/sound/item/resource-inventory-pickup.ogg",
+      volume = 0.6
+    },
+    drop_sound = {
+      filename = "__base__/sound/item/resource-inventory-move.ogg",
+      volume = 0.8
+    },
   },
   { --钨矿星岩
     type = "item",
@@ -199,6 +223,18 @@ data:extend({
     default_import_location = "vulcanus",
     weight = 100 * kg,
     order = "z-z-z",
+    inventory_move_sound = {
+      filename = "__base__/sound/item/resource-inventory-move.ogg",
+      volume = 0.8
+    },
+    pick_sound = {
+      filename = "__base__/sound/item/resource-inventory-pickup.ogg",
+      volume = 0.6
+    },
+    drop_sound = {
+      filename = "__base__/sound/item/resource-inventory-move.ogg",
+      volume = 0.8
+    },
   },
   { --钬矿星岩
     type = "item",
@@ -209,6 +245,18 @@ data:extend({
     default_import_location = "fulgora",
     weight = 100 * kg,
     order = "z-z-z",
+    inventory_move_sound = {
+      filename = "__base__/sound/item/resource-inventory-move.ogg",
+      volume = 0.8
+    },
+    pick_sound = {
+      filename = "__base__/sound/item/resource-inventory-pickup.ogg",
+      volume = 0.6
+    },
+    drop_sound = {
+      filename = "__base__/sound/item/resource-inventory-move.ogg",
+      volume = 0.8
+    },
   },
   { --冰星星岩
     type = "item",
@@ -219,6 +267,18 @@ data:extend({
     default_import_location = "aquilo",
     weight = 100 * kg,
     order = "z-z-z",
+    inventory_move_sound = {
+      filename = "__base__/sound/item/resource-inventory-move.ogg",
+      volume = 0.8
+    },
+    pick_sound = {
+      filename = "__base__/sound/item/resource-inventory-pickup.ogg",
+      volume = 0.6
+    },
+    drop_sound = {
+      filename = "__base__/sound/item/resource-inventory-move.ogg",
+      volume = 0.8
+    },
   }
 })
 local sol_silo = table.deepcopy(data.raw.item["rocket-silo"])
@@ -264,7 +324,7 @@ data:extend { fly_to_die_thruster }
 
 
 local pack_pattern = table.deepcopy(data.raw["space-platform-starter-pack"]["space-platform-starter-pack"])
-pack_pattern.create_electric_network = false
+pack_pattern.create_electric_network = settings.startup["global-power"].value
 pack_pattern.hidden = true
 pack_pattern.hidden_in_factoriopedia = true
 pack_pattern.initial_items = {
@@ -565,21 +625,144 @@ hairyclubnub_seed.pictures = {
 data:extend {
   cuttlepop_seed, hairyclubnub_seed
 }
+
+
 --还没做完的废料回收
 local scrap1 = table.deepcopy(data.raw.item.scrap)
 scrap1.spoil_result = "scrap"
 scrap1.spoil_ticks = 300
 scrap1.name = "scrap1"
-scrap1.hidden = true
-scrap1.hidden_in_factoriopedia = true
+scrap1.inventory_move_sound = {
+  filename = "__base__/sound/item/fuel-cell-inventory-move.ogg",
+  volume = 0.8
+}
+scrap1.pick_sound = {
+  filename = "__base__/sound/item/fuel-cell-inventory-pickup.ogg",
+  volume = 0.6
+}
+scrap1.drop_sound = {
+  filename = "__base__/sound/item/fuel-cell-inventory-move.ogg",
+  volume = 0.8
+}
+-- scrap1.hidden = true
+-- scrap1.hidden_in_factoriopedia = true
 data:extend { scrap1 }
+local cube_pattern = {
+  stack_size = 1,
+  icon_size = 64,
+  flags = { "ignore-spoil-time-modifier" }, --不受设置中腐烂时间影响
+  weight = 1000,
+  inventory_move_sound = {
+    filename = "__base__/sound/item/fuel-cell-inventory-move.ogg",
+    volume = 0.8
+  },
+  pick_sound = {
+    filename = "__base__/sound/item/fuel-cell-inventory-pickup.ogg",
+    volume = 0.6
+  },
+  drop_sound = {
+    filename = "__base__/sound/item/fuel-cell-inventory-move.ogg",
+    volume = 0.8
+  },
+  type = "item",
+  subgroup = "cube",
+  group="cube"
+}
+--方块,需要设置不同腐败时间的方块
+--每个方块有五层
+local cubes = {
+  ["black-cube"]={
+    icon = "__spaceplatform-block__/graphics/icons/black-cube.png",
+    spoil_ticks=30*minute,
+    spoil_result="white-cube"
+  },
+  ["white-cube"]={
+    icon = "__spaceplatform-block__/graphics/icons/white-cube.png",
+    spoil_ticks=1*second,
+    spoil_result="black-cube"
+  },
+  ["blue-cube"]={
+    icon = "__spaceplatform-block__/graphics/icons/blue-cube.png",
+    spoil_ticks=1*minute,
+    spoil_result="black-cube"
+  },
+  ["gold-cube"]={
+    icon = "__spaceplatform-block__/graphics/icons/gold-cube.png",
+    spoil_ticks=1*minute,
+    spoil_result="black-cube"
+  }
+}
+local max_level=settings.startup["cube-level"].value
+for name, cube in pairs(cubes) do
+  for num = 1,max_level do
+    local tar = table.deepcopy(cube_pattern)
+    for key, value in pairs(cube) do
+      tar[key] = value
+    end
+    tar.name=name.."-"..(num+'0')
+    tar.localised_name={"item-name."..name}
+    tar.localised_description={"item-description."..name}
+    tar.spoil_ticks=tar.spoil_ticks*(num)
+    if num==1 then--跌到下一层
+      tar.spoil_result=tar.spoil_result.."-"..(num+'0')
+    else
+      tar.spoil_result=tar.spoil_result.."-"..(num-1+'0')
+    end
+    data:extend { tar }
+  end
+end
+
 
 
 --反向推进器
-local reverse_thruster=table.deepcopy(data.raw.item.thruster)
-reverse_thruster.name="reverse-thruster"
-reverse_thruster.place_result="reverse-thruster-skin"
-reverse_thruster.icon="__spaceplatform-block__/graphics/icons/reverse-thruster.png"
-data:extend{
+local reverse_thruster = table.deepcopy(data.raw.item.thruster)
+reverse_thruster.name = "reverse-thruster"
+reverse_thruster.place_result = "reverse-thruster-skin"
+reverse_thruster.icon = "__spaceplatform-block__/graphics/icons/reverse-thruster.png"
+data:extend {
   reverse_thruster
 }
+
+--自动重炮
+local automated_artillery_turret = table.deepcopy(data.raw.item["artillery-turret"])
+automated_artillery_turret.name = "automated-artillery-turret"
+automated_artillery_turret.place_result = "automated-artillery-turret"
+automated_artillery_turret.icon = "__spaceplatform-block__/graphics/icons/automated-artillery-turret.png"
+data:extend { automated_artillery_turret }
+
+--热能提取器
+local heat_extractor = table.deepcopy(data.raw.item["nuclear-reactor"])
+heat_extractor.name = "heat-extractor"
+heat_extractor.place_result = "heat-extractor"
+heat_extractor.icon = "__spaceplatform-block__/graphics/icons/heat-extractor-icon.png"
+data:extend { heat_extractor }
+
+
+--氟酮换热器
+local f_exchanger = table.deepcopy(data.raw.item["heat-exchanger"])
+f_exchanger.name = "fluoroketone-heat-exchanger"
+f_exchanger.place_result = "fluoroketone-heat-exchanger"
+f_exchanger.icon = "__spaceplatform-block__/graphics/icons/fluoroketone-heat-exchanger.png"
+data:extend { f_exchanger }
+
+--氟酮发电机
+local f_gen = table.deepcopy(data.raw.item["fusion-generator"])
+f_gen.name = "fluoroketone-generator"
+f_gen.place_result = "fluoroketone-generator"
+f_gen.icon = "__spaceplatform-block__/graphics/icons/fluoroketone-generator.png"
+data:extend { f_gen }
+
+--星岩锅炉，好唐的名字
+local asteroid_boiler = table.deepcopy(data.raw.item["boiler"])
+asteroid_boiler.name = "asteroid-boiler"
+asteroid_boiler.place_result = "asteroid-boiler"
+asteroid_boiler.icon = "__spaceplatform-block__/graphics/icons/asteroid-boiler.png"
+data:extend { asteroid_boiler }
+
+--电弧熔炉
+local arc_furnace=table.deepcopy(data.raw.item["electric-furnace"])
+arc_furnace.name="arc-furnace"
+arc_furnace.place_result="arc-furnace"
+arc_furnace.icon="__spaceplatform-block__/graphics/icons/arc-furnace-icon.png"
+arc_furnace.icon_size=64
+data:extend{arc_furnace}

@@ -3,12 +3,13 @@ local handler = require("event_handler")
 
 handler.add_lib(require("scripts.sol"))
 handler.add_lib(require("scripts.reverse-thruster"))
-
+handler.add_lib(require("scripts.heat-extractor"))
+handler.add_libraries(require("scripts.generate-asteroid"))--有一堆
 --这代码我自己看了都想笑
 --这也太烂了
 --总之是引用了人家自己写好的handler把下面这坨都给塞进去，来实现多触发什么的
 local e = defines.events
-local base_control={}
+local base_control = {}
 local function cal_distance(planet)
     local position = planet.prototype.position
     return position.x * position.x + position.y * position.y
@@ -57,28 +58,28 @@ local function load_storage_data()
     if settings.startup["gamemode"].value == "fly-to-die" then
         --解锁所有space-location
         --给飞船设定航线
-        for name,planet in pairs(game.planets) do
-            if name~="nauvis" and name~="sol" and name~="mothership" then
-                local location_name=name.."-orbit"
+        for name, planet in pairs(game.planets) do
+            if name ~= "nauvis" and name ~= "sol" and name ~= "mothership" then
+                local location_name = name .. "-orbit"
                 game.forces.player.unlock_space_location(location_name)
             end
         end
         game.forces.player.unlock_space_location("solar-system-edge")
         game.forces.player.unlock_space_location("shattered-planet")
         game.forces.player.lock_space_location("sol")
-        local schedule={
-            current=1,
-            records={
+        local schedule = {
+            current = 1,
+            records = {
                 {
-                    station="shattered-planet"
+                    station = "shattered-planet"
                 }
             }
         }
-        game.planets["mothership"].surface.platform.schedule=schedule
-        game.planets["mothership"].surface.platform.paused=false
+        game.planets["mothership"].surface.platform.schedule = schedule
+        game.planets["mothership"].surface.platform.paused = false
     end
 end
-base_control.on_init=function()
+base_control.on_init = function()
     if game.tick > 0 then
         storage.init = true
         return
@@ -93,14 +94,18 @@ base_control.on_init=function()
 
     load_storage_data()
 end
-base_control.on_configuration_changed=function()  --更新一些mod更新没补上的科技
-    if game.forces.player.technologies["rocket-silo"].researched then
-        game.forces.player.recipes["rocket-silo"].enabled = true
-    end
-    if game.forces.player.technologies["space-platform"].researched then
-        game.forces.player.recipes["space-platform-hub"].enabled = true
-    end
+base_control.on_configuration_changed = function() --更新一些mod更新没补上的科技
+
     game.forces.player.unlock_space_location("sol")
+    --重置科技
+    for name, force in pairs(game.forces) do
+        force.reset_recipes()
+        for name, technology in pairs(force.technologies) do
+            if technology.researched then
+                technology.reload()
+            end
+        end
+    end
     load_storage_data()
     for name, planet in pairs(game.planets) do
         if name ~= "sol" and name ~= "nauvis" and name ~= "mothership" and planet.surface then
@@ -112,7 +117,7 @@ base_control.on_configuration_changed=function()  --更新一些mod更新没补�
     game.planets["mothership"].surface.set_property("pressure", 0)
 end
 --如果玩家的物理身体在母星，则看一眼是不是母舰没了，没了就重新捏一个
-local test_and_repair_ship=function(event)
+local test_and_repair_ship = function(event)
     if not game.planets["mothership"].surface then
         --如果玩家不在，但是母舰没了
         local force = game.forces.player
@@ -124,7 +129,7 @@ local test_and_repair_ship=function(event)
         storage["platform"] = game.planets["mothership"].surface.platform
     end
 end
-local on_player_created=function(event)
+local on_player_created = function(event)
     local player = game.get_player(event.player_index) --[[@as LuaPlayer]]
 
     player.insert({ name = "space-platform-foundation", count = 100 })
@@ -136,7 +141,7 @@ local on_player_created=function(event)
     end
 end
 
-local function teleport_mothership(player)--[[@as LuaPlayer]]
+local function teleport_mothership(player) --[[@as LuaPlayer]]
     local position = storage["platform"].surface.find_non_colliding_position("character", { 0, 0 }, 10, 0.1)
     if not position then
         storage["platform"].surface.set_tiles({ { position = { 0, 0 }, name = "space-platform-foundation" }, { position = { 1, 0 }, name = "space-platform-foundation" }, { position = { 0, 1 }, name = "space-platform-foundation" }, { position = { 1, 1 }, name = "space-platform-foundation" } })
@@ -146,14 +151,14 @@ local function teleport_mothership(player)--[[@as LuaPlayer]]
 end
 local function handle_respawn(event)
     local player = game.get_player(event.player_index) --[[@as LuaPlayer]]
-    if player.physical_surface.name == "nauvis"then
+    if player.physical_surface.name == "nauvis" then
         --如果在太阳就传送回母舰防止死档
         test_and_repair_ship()
         --旧版本地板可能被挖走了
         teleport_mothership(player)
     end
 end
-local on_respawn_on_sol=function (event)
+local on_respawn_on_sol = function(event)
     local player = game.get_player(event.player_index) --[[@as LuaPlayer]]
     if player.physical_surface.name == "sol" then
         --如果在太阳就传送回母舰防止死档
@@ -169,7 +174,7 @@ local support_planet = {
     fulgora = true,
     aquilo = true
 }
-local on_space_platform_changed_state =function(event)
+local on_space_platform_changed_state = function(event)
     local platform = event.platform
     -- game.print(platform.name)
     -- game.print(event.old_state)
@@ -292,36 +297,12 @@ local on_gui_click = function(event)
     if event.element.name == "create_platform_button" then
         local launch_flow = event.element.parent
         local planet = launch_flow.select_planet.planet_dropdown.items
-        [launch_flow.select_planet.planet_dropdown.selected_index]
+            [launch_flow.select_planet.planet_dropdown.selected_index]
         local pack = launch_flow.select_starter_pack.starter_pack_dropdown.items
-        [launch_flow.select_starter_pack.starter_pack_dropdown.selected_index]
+            [launch_flow.select_starter_pack.starter_pack_dropdown.selected_index]
         pack = string.sub(pack, 7, -2)
         player.force.create_space_platform { name = "platform", planet = planet, starter_pack = pack }
         launch_flow.parent.destroy()
-    end
-end
-local leave_hub = function(event)
-    local player = game.players[event.player_index]
-    if player.controller_type == defines.controllers.remote and
-        player.physical_controller_type == defines.controllers.character
-    then
-        if not (
-                (player.physical_position.x == 0 and
-                    player.physical_position.y == 0) or
-                (player.physical_position.x == -4.19921875 and
-                    player.physical_position.y == 4.19921875) or
-                (player.physical_position.x == 4.19921875 and
-                    player.physical_position.y == -4.19921875) or
-                (player.physical_position.x == -4.19921875 and
-                    player.physical_position.y == -4.19921875) or
-                (player.physical_position.x == 4.19921875 and
-                    player.physical_position.y == 4.19921875)
-            ) then
-            return
-        end
-        player.leave_space_platform()
-        player.set_controller { type = player.physical_controller_type, character = player.character }
-        player.teleport(player.physical_surface.find_non_colliding_position("character", player.physical_position, 6, 0.1))
     end
 end
 local on_chunk_charted = function(event)
@@ -340,7 +321,7 @@ local on_chunk_charted = function(event)
     end
 end
 
-local lock_location =function(event)
+local lock_location = function(event)
     for name, planet in pairs(game.planets) do
         if name ~= "nauvis" and name ~= "mothership" and name ~= "sol" then
             if game.forces.player.is_space_location_unlocked(name) and (not planet.surface or not planet.surface.valid) then
@@ -349,39 +330,38 @@ local lock_location =function(event)
             end
         end
     end
-
 end
 
-local fly_to_die_add_fuel=function(event)
+local fly_to_die_add_fuel = function(event)
     --飞到死模式给引擎加燃料
     if settings.startup["gamemode"].value == "fly-to-die" then
         if not game.planets["mothership"].surface or not game.planets["mothership"].surface.valid then return end
-        local thruster=game.planets["mothership"].surface.find_entity("fly-to-die-thruster",{0,0})
-        local weight=game.planets["mothership"].surface.platform.weight/1000
+        local thruster = game.planets["mothership"].surface.find_entity("fly-to-die-thruster", { 0, 0 })
+        local weight = game.planets["mothership"].surface.platform.weight / 1000
         if thruster then
-            thruster.set_fluid(1,{name="thruster-fuel",amount=weight})
-            thruster.set_fluid(2,{name="thruster-oxidizer",amount=weight})
+            thruster.set_fluid(1, { name = "thruster-fuel", amount = weight })
+            thruster.set_fluid(2, { name = "thruster-oxidizer", amount = weight })
         end
     end
 end
-local base_on_tick=function (event)
+local base_on_tick = function(event)
     fly_to_die_add_fuel(event)
     test_and_repair_ship(event)
     lock_location(event)
 end
 
-base_control.events={
-    [e.on_player_created]=on_player_created,
-    [e.on_player_respawned]=on_respawn_on_sol,
-    [e.on_player_changed_surface]=handle_respawn,
-    [e.on_space_platform_changed_state]=on_space_platform_changed_state,
-    [e.on_lua_shortcut]=on_lua_shortcut,
-    [e.on_gui_click]=on_gui_click,
-    ["leave_hub"]=leave_hub,
-    [e.on_chunk_charted]=on_chunk_charted,
-    [e.on_tick]=fly_to_die_add_fuel
+base_control.events = {
+    [e.on_player_created] = on_player_created,
+    [e.on_player_respawned] = on_respawn_on_sol,
+    [e.on_player_changed_surface] = handle_respawn,
+    [e.on_space_platform_changed_state] = on_space_platform_changed_state,
+    [e.on_lua_shortcut] = on_lua_shortcut,
+    [e.on_gui_click] = on_gui_click,
+    ["leave_hub"] = leave_hub,
+    [e.on_chunk_charted] = on_chunk_charted,
+    [e.on_tick] = fly_to_die_add_fuel
 }
-base_control.on_nth_tick={
-    [10]=base_on_tick
+base_control.on_nth_tick = {
+    [10] = base_on_tick
 }
 handler.add_lib(base_control)

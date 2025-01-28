@@ -7,12 +7,11 @@ local nauvisorbit = table.deepcopy(data.raw.planet.nauvis)
 nauvisorbit.name = "nauvisorbit"
 data.extend { nauvisorbit }
 --挪一下母星的位置藏起来
-data.raw.planet.nauvis.icon_size=1
-data.raw.planet.nauvis.distance=1000
-data.raw.planet.nauvis.draw_orbit=false
-data.raw.planet.nauvis.hidden=true
-data.raw.planet.nauvis.hidden_in_factoriopedia=true
-data.raw.planet.nauvis.map_gen_settings=nil
+data.raw.planet.nauvis.distance = 1000
+data.raw.planet.nauvis.draw_orbit = false
+data.raw.planet.nauvis.hidden = true
+data.raw.planet.nauvis.hidden_in_factoriopedia = true
+data.raw.planet.nauvis.map_gen_settings = nil
 local mothership_asteroid =
 {
   probability_on_range_chunk =

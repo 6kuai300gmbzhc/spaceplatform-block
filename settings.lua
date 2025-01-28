@@ -1,5 +1,19 @@
 data:extend {
     {
+        type = "bool-setting",
+        name = "global-power",
+        setting_type = "startup",
+        default_value = false,
+        order = "a"
+    },
+    {
+        type = "int-setting",
+        name = "cube-level",
+        setting_type = "startup",
+        default_value = 5,
+        order = "a"
+    },
+    {
         type = "string-setting",
         name = "gamemode",
         setting_type = "startup",

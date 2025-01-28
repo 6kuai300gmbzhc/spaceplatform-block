@@ -1,6 +1,6 @@
 local e = defines.events
-
-
+local utils = require("script_utils")
+local storage_name = "reverse_thrusters"
 local on_entity_created = function(event)
     local entity
     if event.entity and event.entity.valid then
@@ -15,44 +15,40 @@ local on_entity_created = function(event)
             name = "reverse-thruster-soul",
             position = entity.position,
             direction = entity.direction,
-            force = entity.force
-        }                                                                                              --把真正的推进器放下来
-        local reverse_thrusters = storage["reverse_thrusters_position"] or {}
-        table.insert(reverse_thrusters, { entity.position.x, entity.position.y, entity.surface.name }) --x,y,表面名字
-        storage["reverse_thrusters_position"] = reverse_thrusters
+            force = entity.force,
+            quality = entity.quality
+        } --把真正的推进器放下来
+        utils.save_to_storage(storage_name, entity)
     end
 end
 local on_removed_entity = function(event)
     if event.entity and event.entity.valid and event.entity.surface
         and event.entity.name == "reverse-thruster-skin" then
         local entity = event.entity
-        local tank = entity.surface.find_entity("reverse-thruster-soul", entity.position)
-        if tank then tank.destroy() end
-        for i, position in pairs(storage["reverse_thrusters_position"]) do
-            if position[1] == entity.position[1] and
-                position[2] == entity.position[2] and
-                position[3] == entity.surface.name
-            then
-                storage["reverse_thrusters_position"][i] = nil
-                break
-            end
-        end
+        local soul = entity.surface.find_entities_filtered({
+            position = entity.position,
+            name = "reverse-thruster-soul"
+        })
+        if soul and soul[1] and soul[1].valid then soul[1].destroy() end
+        utils.delete_storage_entity(storage_name, entity)
     end
 end
 local on_tick = function(event)
     local surface = game.planets.mothership.surface
     if not surface or not surface.valid then return end
-    if not storage["reverse_thrusters_position"] then return end
-    for i, position in pairs(storage["reverse_thrusters_position"]) do
-        local surface = game.surfaces[position[3]]
+    if not storage[storage_name] then return end
+    for i, entity in pairs(storage[storage_name]) do
+        local surface = entity.surface
         if surface and surface.valid then
-            local soul = surface.find_entity("reverse-thruster-soul", { position[1], position[2] })
-            local skin = surface.find_entity("reverse-thruster-skin", { position[1], position[2] })
-            if soul and soul.valid then
-                local fuel = skin.get_fluid(1)
-                if fuel then soul.set_fluid(1, { name = "thruster-fuel", amount = fuel.amount }) end
-                local oxide = skin.get_fluid(2)
-                if oxide then soul.set_fluid(2, { name = "thruster-oxidizer", amount = oxide.amount }) end
+            local soul = surface.find_entities_filtered({
+                position = entity.position,
+                name = "reverse-thruster-soul"
+            })
+            if soul and soul[1] and soul[1].valid then
+                local fuel = entity.get_fluid(1)
+                if fuel then soul[1].set_fluid(1, { name = "thruster-fuel", amount = fuel.amount }) end
+                local oxide = entity.get_fluid(2)
+                if oxide then soul[1].set_fluid(2, { name = "thruster-oxidizer", amount = oxide.amount }) end
             end
         end
     end

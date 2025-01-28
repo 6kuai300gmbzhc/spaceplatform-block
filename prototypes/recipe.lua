@@ -94,7 +94,7 @@ data.raw.recipe["metallic-asteroid-crushing"].results = {
   { type = "item", name = "metallic-asteroid-chunk", amount = 1, probability = 0.2, ignored_by_productivity = 1 }
 }
 data:extend({
-  {   --太阳火箭发射井
+  { --太阳火箭发射井
     type = "recipe",
     name = "sol-rocket-silo",
     icon = "__spaceplatform-block__/graphics/icons/sol-rocket-silo.png",
@@ -112,8 +112,8 @@ data:extend({
         type = "item"
       },
       {
-        amount = 100,
-        name = "foundation",
+        amount = 25,
+        name = "quantum-processor",
         type = "item"
       }
     },
@@ -129,7 +129,7 @@ data:extend({
     allow_productivity = false,
     category = "rocket-building",
     enabled = false,
-    energy_required = 120,
+    energy_required = 10,
     hide_from_player_crafting = true,
     ingredients = {
       {
@@ -138,17 +138,17 @@ data:extend({
         type = "item"
       },
       {
-        amount = 100,
+        amount = 50,
         name = "low-density-structure",
         type = "item"
       },
       {
-        amount = 100,
+        amount = 50,
         name = "holmium-plate",
         type = "item"
       },
       {
-        amount = 500,
+        amount = 200,
         name = "rocket-fuel",
         type = "item"
       }
@@ -164,7 +164,7 @@ data:extend({
     },
     type = "recipe"
   },
-  {   --探空启动包
+  { --探空启动包
     type = "recipe",
     name = "mothership_pack",
     icon = "__base__/graphics/icons/satellite.png",
@@ -186,7 +186,7 @@ data:extend({
       }
     },
   },
-  {   --枢纽
+  { --枢纽
     type = "recipe",
     name = "space-platform-hub",
     icon = "__space-age__/graphics/icons/space-platform-hub.png",
@@ -218,7 +218,7 @@ data:extend({
     },
     hidden_in_factoriopedia = true
   },
-  {   --简单金属星岩粉碎
+  { --简单金属星岩粉碎
     type = "recipe",
     name = "simple-metallic-asteroid-crushing",
     icon = "__spaceplatform-block__/graphics/icons/simple-metallic-asteroid-crushing.png",
@@ -233,13 +233,13 @@ data:extend({
     },
     results =
     {
-      { type = "item", name = "iron-ore", amount = 8 },
+      { type = "item", name = "iron-ore",   amount = 8 },
       { type = "item", name = "copper-ore", amount = 6 }
     },
     allow_productivity = true,
     allow_decomposition = false
   },
-  {   --简单碳质星岩粉碎
+  { --简单碳质星岩粉碎
     type = "recipe",
     name = "simple-carbonic-asteroid-crushing",
     icon = "__spaceplatform-block__/graphics/icons/simple-carbonic-asteroid-crushing.png",
@@ -255,12 +255,12 @@ data:extend({
     results =
     {
       { type = "item", name = "carbon", amount = 6 },
-      { type = "item", name = "stone", amount = 5 }
+      { type = "item", name = "stone",  amount = 5 }
     },
     allow_productivity = true,
     allow_decomposition = false
   },
-  {   --简单氧化星岩粉碎
+  { --简单氧化星岩粉碎
     type = "recipe",
     name = "simple-oxide-asteroid-crushing",
     icon = "__spaceplatform-block__/graphics/icons/simple-oxide-asteroid-crushing.png",
@@ -280,7 +280,7 @@ data:extend({
     allow_productivity = true,
     allow_decomposition = false
   },
-  {   --有机星岩粉碎
+  { --有机星岩粉碎
     type = "recipe",
     name = "organic-asteroid-crushing",
     icon = "__spaceplatform-block__/graphics/icons/organic-asteroid-crushing.png",
@@ -295,17 +295,17 @@ data:extend({
     },
     results =
     {
-      { type = "item", name = "jellynut-seed", amount = 1, probability = 0.01 },
-      { type = "item", name = "yumako-seed", amount = 1, probability = 0.01 },
-      { type = "item", name = "pentapod-egg", amount = 1, probability = 0.1, percent_spoiled = 0.8 },
-      { type = "item", name = "spoilage",  amount = 10, probability = 0.88 },
-      { type = "item", name = "stone",     amount = 10 }
+      { type = "item", name = "jellynut-seed", amount = 1,  probability = 0.01 },
+      { type = "item", name = "yumako-seed",   amount = 1,  probability = 0.01 },
+      { type = "item", name = "pentapod-egg",  amount = 1,  probability = 0.1, percent_spoiled = 0.8 },
+      { type = "item", name = "spoilage",      amount = 10, probability = 0.88 },
+      { type = "item", name = "stone",         amount = 10 }
     },
     allow_productivity = true,
     allow_decomposition = false,
     category = "crushing",
   },
-  {   --铀矿星岩粉碎
+  { --铀矿星岩粉碎
     type = "recipe",
     name = "uranium-asteroid-crushing",
     icon = "__spaceplatform-block__/graphics/icons/uranium-asteroid-crushing.png",
@@ -326,7 +326,7 @@ data:extend({
     allow_decomposition = false,
     category = "crushing",
   },
-  {   --生物质收集
+  { --生物质收集
     type = "recipe",
     name = "organic-solution-gathering",
     icon = "__spaceplatform-block__/graphics/icons/organic-solution-gathering.png",
@@ -338,13 +338,13 @@ data:extend({
     energy_required = 5,
     ingredients =
     {
-      { type = "item", name = "carbonic-asteroid-chunk", amount = 1 },
-      { type = "fluid", name = "water",                  amount = 10 }
+      { type = "item",  name = "carbonic-asteroid-chunk", amount = 1 },
+      { type = "fluid", name = "water",                   amount = 10 }
     },
     results =
     {
-      { type = "fluid", name = "organic-solution",       amount = 100, probability = 0.1 },
-      { type = "item", name = "carbonic-asteroid-chunk", amount = 1, probability = 0.7 }
+      { type = "fluid", name = "organic-solution",        amount = 100, probability = 0.1 },
+      { type = "item",  name = "carbonic-asteroid-chunk", amount = 1,   probability = 0.7 }
     },
     allow_productivity = false,
     allow_decomposition = false,
@@ -356,7 +356,7 @@ data:extend({
       quaternary = { r = 0.174, g = 0.629, b = 0.000, a = 0.502 }
     }
   },
-  {   --细菌发现
+  { --细菌发现
     type = "recipe",
     name = "bacteria-discovering",
     icon = "__spaceplatform-block__/graphics/icons/bacteria.png",
@@ -382,7 +382,7 @@ data:extend({
       quaternary = { r = 0.174, g = 0.629, b = 0.000, a = 0.502 }
     }
   },
-  {   --细菌培养
+  { --细菌培养
     type = "recipe",
     name = "bacteria-cultivation",
     icon = "__spaceplatform-block__/graphics/icons/bacteria-cultivation.png",
@@ -411,7 +411,7 @@ data:extend({
       quaternary = { r = 0.174, g = 0.629, b = 0.000, a = 0.502 }
     }
   },
-  {   --细菌提取生物溶剂
+  { --细菌提取生物溶剂
     type = "recipe",
     name = "extracting-organic-solution-from-bacteria",
     icon = "__spaceplatform-block__/graphics/icons/organic-solution.png",
@@ -439,7 +439,7 @@ data:extend({
       quaternary = { r = 0.174, g = 0.629, b = 0.000, a = 0.502 }
     }
   },
-  {   --碳质星岩定向选择
+  { --碳质星岩定向选择
     type = "recipe",
     name = "carbon-astroid-natural-selecting",
     icon = "__spaceplatform-block__/graphics/icons/carbon-astroid-natural-selecting.png",
@@ -622,7 +622,7 @@ data:extend {
     },
     results =
     {
-      { amount = 15, name = "stone",      type = "item" },
+      { amount = 15, name = "stone",        type = "item" },
       { amount = 10, name = "tungsten-ore", type = "item" }
     }
   }
@@ -823,7 +823,7 @@ for _, i in pairs({ "iron", "copper" }) do --调整铜铁细菌
       amount = 1,
       name = "metallic-asteroid-chunk",
       type = "item",
-      probability = 0.98,
+      probability = 1-(1/20),
       ignored_by_productivity = 1
     },
     {
@@ -933,7 +933,6 @@ data.raw.recipe["scrap-recycling"].results = { { amount = 1, name = "scrap1", ty
 data.raw.recipe["scrap-recycling"].allow_productivity = false --废料回收
 
 
-
 --贫铀弹夹和特斯拉弹药
 if settings.startup["gamemode"].value ~= "normal" then
   data.raw.recipe["firearm-magazine"].ingredients = {
@@ -1008,13 +1007,288 @@ if settings.startup["gamemode"].value ~= "normal" then
 end
 
 --反向推进器
-local reverse_thruster=table.deepcopy(data.raw.recipe.thruster)
-reverse_thruster.results={
+local reverse_thruster = table.deepcopy(data.raw.recipe.thruster)
+reverse_thruster.results = {
   {
     amount = 1,
     name = "reverse-thruster",
     type = "item"
   }
 }
-reverse_thruster.name="reverse-thruster"
-data:extend{reverse_thruster}
+reverse_thruster.name = "reverse-thruster"
+data:extend { reverse_thruster }
+
+
+--自动重炮
+data:extend {
+  {
+    enabled = false,
+    energy_required = 60,
+    ingredients = {
+      {
+        amount = 1,
+        name = "artillery-turret",
+        type = "item"
+      },
+      {
+        amount = 100,
+        name = "quantum-processor",
+        type = "item"
+      }
+    },
+    name = "automated-artillery-turret",
+    results = {
+      {
+        amount = 1,
+        name = "automated-artillery-turret",
+        type = "item"
+      }
+    },
+    type = "recipe"
+  },
+}
+
+
+data:extend {
+  { --氟酮加热配方，给换热器用
+    allow_productivity = false,
+    always_show_products = false,
+    category = "fluoroketone-heat-exchanger",
+    hidden = true,
+    hidden_in_factoriopedia = true,
+    hide_from_player_crafting = true,
+    allow_as_intermediate = false,
+    always_show_made_in = true,
+    enabled = true,
+    energy_required = 5,
+    ingredients = {
+      {
+        amount = 100,
+        name = "fluoroketone-cold",
+        temperature = -150,
+        type = "fluid"
+      }
+
+    },
+    name = "fluoroketone-heating",
+    order = "z-z-z",
+    results = {
+      {
+        amount = 100,
+        name = "fluoroketone-hot",
+        type = "fluid",
+        temperature = 500,
+      }
+    },
+    show_amount_in_title = false,
+    subgroup = "fluoroketone-heat-exchanger",
+    type = "recipe"
+  },
+  { --星岩变蒸汽的配方，用来发电,和蒸汽机比例保持1：2
+    allow_productivity = false,
+    always_show_products = false,
+    category = "asteroid-boiler",
+    hide_from_player_crafting = true,
+    allow_as_intermediate = false,
+    enabled = false,
+    energy_required = 20,
+    ingredients = {
+      {
+        amount = 1,
+        name = "oxide-asteroid-chunk",
+        type = "item"
+      },
+      {
+        amount = 2,
+        name = "iron-ore",
+        type = "item"
+      },
+      {
+        amount = 2,
+        name = "carbon",
+        type = "item"
+      }
+    },
+    name = "steam-from-asteroids",
+    order = "z-z-z",
+    results = {
+      {
+        amount = 1200,
+        name = "steam",
+        type = "fluid",
+        temperature = 165,
+      }
+    },
+    show_amount_in_title = false,
+    subgroup = "asteroid-boiler",
+    type = "recipe"
+  },
+  { --让星岩锅炉可以充当电锅炉用，就是冰转蒸汽，冰转水，水转蒸汽
+    allow_productivity = false,
+    always_show_products = false,
+    category = "asteroid-boiler",
+    hide_from_player_crafting = true,
+    allow_as_intermediate = false,
+    enabled = false,
+    energy_required = 2,
+    ingredients = {
+      {
+        amount = 1,
+        name = "ice",
+        type = "item"
+      }
+    },
+    name = "cold-steam-from-ice",
+    order = "z-z-z",
+    results = {
+      {
+        amount = 200,
+        name = "steam",
+        type = "fluid",
+        temperature = 15, --很6
+      }
+    },
+    show_amount_in_title = false,
+    subgroup = "asteroid-boiler",
+    type = "recipe"
+  },
+  {
+    allow_productivity = false,
+    always_show_products = false,
+    category = "asteroid-boiler",
+    hide_from_player_crafting = true,
+    allow_as_intermediate = false,
+    enabled = false,
+    energy_required = 1,
+    ingredients = {
+      {
+        amount = 1,
+        name = "ice",
+        type = "item"
+      }
+    },
+    name = "water-from-ice",
+    order = "z-z-z",
+    results = {
+      {
+        amount = 20,
+        name = "water",
+        type = "fluid",
+        temperature = 15,
+      }
+    },
+    show_amount_in_title = false,
+    subgroup = "asteroid-boiler",
+    type = "recipe"
+  },
+  {
+    allow_productivity = false,
+    always_show_products = false,
+    category = "asteroid-boiler",
+    hide_from_player_crafting = true,
+    allow_as_intermediate = false,
+    enabled = false,
+    energy_required = 1,
+    ingredients = {
+      {
+        amount = 20,
+        name = "water",
+        type = "fluid"
+      }
+    },
+    name = "cold-steam-from-water",
+    order = "z-z-z",
+    results = {
+      {
+        amount = 200,
+        name = "steam",
+        type = "fluid",
+        temperature = 15,
+      }
+    },
+    show_amount_in_title = false,
+    subgroup = "asteroid-boiler",
+    type = "recipe"
+  },
+  {
+    allow_productivity = false,
+    always_show_products = false,
+    category = "asteroid-boiler",
+    hide_from_player_crafting = true,
+    allow_as_intermediate = false,
+    enabled = false,
+    energy_required = 6,
+    ingredients = {
+      {
+        amount = 20,
+        name = "steam",
+        type = "fluid"
+      }
+    },
+    name = "steam-heating",
+    order = "z-z-z",
+    results = {
+      {
+        amount = 20,
+        name = "steam",
+        type = "fluid",
+        temperature = 165,
+      }
+    },
+    show_amount_in_title = false,
+    subgroup = "asteroid-boiler",
+    type = "recipe"
+  },
+  { --合成星岩锅炉的配方，取代原有的普通锅炉
+    enabled = false,
+    ingredients = {
+      {
+        amount = 1,
+        name = "stone-furnace",
+        type = "item"
+      },
+      {
+        amount = 4,
+        name = "pipe",
+        type = "item"
+      }
+    },
+    name = "asteroid-boiler",
+    results = {
+      {
+        amount = 1,
+        name = "asteroid-boiler",
+        type = "item"
+      }
+    },
+    type = "recipe"
+  }
+}
+--然后是激动人心的方块来回转和物质合成环节
+data:extend{
+  {
+    enabled = true,
+    ingredients = {
+      {
+        amount = 1,
+        name = "black-cube-1",
+        type = "item"
+      },
+      {
+        amount = 1,
+        name = "fusion-power-cell",
+        type = "item"
+      }
+    },
+    name = "cube-upgrade",
+    results = {
+      {
+        amount = 1,
+        name = "white-cube-2",
+        type = "item"
+      }
+    },
+    type = "recipe",
+    category="cube"
+  }
+}
